@@ -1,0 +1,400 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Proyecto_Final.ViewModels"
+             xmlns:models="clr-namespace:Proyecto_Final.Models"
+             x:Class="Proyecto_Final.MainPage"
+             x:DataType="vm:MainViewModel"
+             BackgroundColor="#07122A"
+             Shell.NavBarIsVisible="False">
+
+    <Grid>
+        <!-- CONTENIDO PRINCIPAL SCROLLEABLE -->
+        <ScrollView>
+            <VerticalStackLayout Spacing="24" Padding="16,20,16,100">
+
+                <!-- 1. HERO SECTION EMPRESARIAL / ENCABEZADO CON LOGO OFICIAL -->
+                <Border StrokeShape="RoundRectangle 24"
+                        Stroke="#1E3A6E"
+                        StrokeThickness="1.5"
+                        BackgroundColor="#0B1B3D"
+                        Padding="18">
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,6" Radius="12" Opacity="0.4" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="16">
+                        
+                        <!-- Logo oficial estilizado de Construcciones Durán -->
+                        <Border StrokeShape="RoundRectangle 16"
+                                Stroke="#9CACBF"
+                                StrokeThickness="1"
+                                BackgroundColor="#061024"
+                                HorizontalOptions="Center"
+                                Padding="8">
+                            <Image Source="logo_construcciones_duran.png"
+                                   HeightRequest="145"
+                                   Aspect="AspectFit"
+                                   SemanticProperties.Description="Logo Oficial Construcciones Durán" />
+                        </Border>
+
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Label Text="CONSTRUCCIONES DURÁN"
+                                   FontSize="22"
+                                   FontAttributes="Bold"
+                                   TextColor="#FFDE00"
+                                   HorizontalTextAlignment="Center" />
+                            <Label Text="Solidez, Calidad y Compromiso en Cada Obra"
+                                   FontSize="12"
+                                   TextColor="#CBD5E1"
+                                   HorizontalTextAlignment="Center" />
+                        </VerticalStackLayout>
+
+                        <!-- Insignias de confianza corporativa -->
+                        <Border StrokeShape="RoundRectangle 12"
+                                BackgroundColor="#07122A"
+                                Stroke="#1E3A6E"
+                                Padding="12,8">
+                            <FlexLayout Wrap="Wrap" JustifyContent="SpaceAround" Direction="Row">
+                                <Label Text="📞 Cel: 77661522" FontSize="11" FontAttributes="Bold" TextColor="#FFDE00" Margin="4,2" />
+                                <Label Text="🛡️ Garantía Estructural" FontSize="11" TextColor="#FFFFFF" Margin="4,2" />
+                                <Label Text="📐 Obras Llave en Mano" FontSize="11" TextColor="#FFFFFF" Margin="4,2" />
+                            </FlexLayout>
+                        </Border>
+
+                        <!-- BOTONES DE ACCIÓN PRINCIPAL (CTA EMPRESARIAL) -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,4,0,0">
+                            <!-- Botón Principal: Cotizar Proyecto -->
+                            <Button Grid.Column="0"
+                                    Text="📐 Cotizar Proyecto"
+                                    Command="{Binding NavegarACotizarCommand}"
+                                    BackgroundColor="#FFDE00"
+                                    TextColor="#07122A"
+                                    FontAttributes="Bold"
+                                    FontSize="14"
+                                    CornerRadius="14"
+                                    HeightRequest="50" />
+
+                            <!-- Botón Secundario: Contactar WhatsApp -->
+                            <Button Grid.Column="1"
+                                    Text="💬 WhatsApp"
+                                    Command="{Binding ContactarWhatsAppDirectoCommand}"
+                                    BackgroundColor="#25D366"
+                                    TextColor="#FFFFFF"
+                                    FontAttributes="Bold"
+                                    FontSize="14"
+                                    CornerRadius="14"
+                                    HeightRequest="50" />
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- 2. SECCIÓN: NUESTROS SERVICIOS ESPECIALIZADOS -->
+                <VerticalStackLayout Spacing="14">
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="SERVICIOS EMPRESARIALES"
+                               FontSize="11"
+                               FontAttributes="Bold"
+                               TextColor="#FFDE00" />
+                        <Label Text="¿Qué construimos para ti?"
+                               FontSize="20"
+                               FontAttributes="Bold"
+                               TextColor="#FFFFFF" />
+                        <Label Text="Soluciones integrales de construcción con supervisión profesional en obra."
+                               FontSize="12"
+                               TextColor="#94A3B8" />
+                    </VerticalStackLayout>
+
+                    <!-- Cuadrícula 2x2 de servicios -->
+                    <Grid RowDefinitions="Auto,Auto" ColumnDefinitions="*,*" RowSpacing="12" ColumnSpacing="12">
+                        
+                        <!-- Servicio 1: Edificación y Obra Civil -->
+                        <Border Grid.Row="0" Grid.Column="0"
+                                StrokeShape="RoundRectangle 16"
+                                Stroke="#1E3A6E"
+                                BackgroundColor="#0D2149"
+                                Padding="14">
+                            <VerticalStackLayout Spacing="8">
+                                <Border BackgroundColor="#06142E" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="44" HeightRequest="44" HorizontalOptions="Start">
+                                    <Label Text="🏗️" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="Edificación Civil" FontSize="14" FontAttributes="Bold" TextColor="#FFFFFF" />
+                                <Label Text="Construcción desde cero de viviendas, condominios y locales comerciales." FontSize="11" TextColor="#CBD5E1" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- Servicio 2: Obra Gruesa y Hormigón -->
+                        <Border Grid.Row="0" Grid.Column="1"
+                                StrokeShape="RoundRectangle 16"
+                                Stroke="#1E3A6E"
+                                BackgroundColor="#0D2149"
+                                Padding="14">
+                            <VerticalStackLayout Spacing="8">
+                                <Border BackgroundColor="#06142E" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="44" HeightRequest="44" HorizontalOptions="Start">
+                                    <Label Text="🔨" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="Obra Gruesa" FontSize="14" FontAttributes="Bold" TextColor="#FFFFFF" />
+                                <Label Text="Fundaciones, losas alivianadas, muros de contención y columnas armadas." FontSize="11" TextColor="#CBD5E1" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- Servicio 3: Remodelación y Acabados -->
+                        <Border Grid.Row="1" Grid.Column="0"
+                                StrokeShape="RoundRectangle 16"
+                                Stroke="#1E3A6E"
+                                BackgroundColor="#0D2149"
+                                Padding="14">
+                            <VerticalStackLayout Spacing="8">
+                                <Border BackgroundColor="#06142E" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="44" HeightRequest="44" HorizontalOptions="Start">
+                                    <Label Text="🎨" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="Remodelaciones" FontSize="14" FontAttributes="Bold" TextColor="#FFFFFF" />
+                                <Label Text="Renovación integral de fachadas, pisos de porcelanato y cielos falsos." FontSize="11" TextColor="#CBD5E1" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                        <!-- Servicio 4: Planos y Asesoría -->
+                        <Border Grid.Row="1" Grid.Column="1"
+                                StrokeShape="RoundRectangle 16"
+                                Stroke="#1E3A6E"
+                                BackgroundColor="#0D2149"
+                                Padding="14">
+                            <VerticalStackLayout Spacing="8">
+                                <Border BackgroundColor="#06142E" StrokeThickness="0" StrokeShape="RoundRectangle 10" WidthRequest="44" HeightRequest="44" HorizontalOptions="Start">
+                                    <Label Text="📐" FontSize="22" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="Planos y Asesoría" FontSize="14" FontAttributes="Bold" TextColor="#FFFFFF" />
+                                <Label Text="Cálculo de presupuestos, cómputos métricos y dirección técnica de obra." FontSize="11" TextColor="#CBD5E1" />
+                            </VerticalStackLayout>
+                        </Border>
+
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!-- 3. SECCIÓN: PORTAFOLIO DE OBRAS EN LA NUBE -->
+                <VerticalStackLayout Spacing="12">
+                    <Grid ColumnDefinitions="*,Auto" VerticalOptions="Center">
+                        <VerticalStackLayout Grid.Column="0" Spacing="2">
+                            <Label Text="PORTAFOLIO EN LA NUBE" FontSize="11" FontAttributes="Bold" TextColor="#FFDE00" />
+                            <Label Text="Obras Realizadas" FontSize="20" FontAttributes="Bold" TextColor="#FFFFFF" />
+                        </VerticalStackLayout>
+
+                        <!-- Enlace para cotizar directamente -->
+                        <Button Grid.Column="1"
+                                Text="Cotizar ➜"
+                                Command="{Binding NavegarACotizarCommand}"
+                                BackgroundColor="Transparent"
+                                TextColor="#FFDE00"
+                                FontAttributes="Bold"
+                                FontSize="13" />
+                    </Grid>
+
+                    <Label Text="Imágenes alojadas en la nube de alta resolución con proyectos entregados."
+                           FontSize="12"
+                           TextColor="#94A3B8" />
+
+                    <!-- Colección horizontal de obras -->
+                    <CollectionView ItemsSource="{Binding Proyectos}"
+                                    ItemsLayout="HorizontalList"
+                                    HeightRequest="335"
+                                    SelectionMode="None">
+                        <CollectionView.EmptyView>
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Padding="20">
+                                <ActivityIndicator IsRunning="True" Color="#FFDE00" />
+                                <Label Text="Sincronizando obras desde la nube..." TextColor="#CBD5E1" FontSize="13" Margin="0,8,0,0" />
+                            </VerticalStackLayout>
+                        </CollectionView.EmptyView>
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="models:Proyecto">
+                                <Border WidthRequest="290"
+                                        Margin="0,0,14,0"
+                                        StrokeShape="RoundRectangle 18"
+                                        Stroke="#1E3A6E"
+                                        StrokeThickness="1"
+                                        BackgroundColor="#0D2149">
+                                    <Grid RowDefinitions="160,Auto,Auto,Auto" Padding="12" RowSpacing="6">
+                                        <!-- Imagen servida desde la nube (Cloud CDN) -->
+                                        <Border Grid.Row="0"
+                                                StrokeShape="RoundRectangle 12"
+                                                StrokeThickness="0">
+                                            <Image Source="{Binding ImagenUrl}"
+                                                   Aspect="AspectFill"
+                                                   HeightRequest="160" />
+                                        </Border>
+
+                                        <!-- Badge de categoría en Rojo Teja Oficial (#DB2B2B) -->
+                                        <HorizontalStackLayout Grid.Row="1" Spacing="6" Margin="0,4,0,0">
+                                            <Border BackgroundColor="#DB2B2B"
+                                                    StrokeThickness="0"
+                                                    StrokeShape="RoundRectangle 6"
+                                                    Padding="7,2">
+                                                <Label Text="{Binding Categoria}"
+                                                       FontSize="10"
+                                                       FontAttributes="Bold"
+                                                       TextColor="#FFFFFF" />
+                                            </Border>
+                                            <Label Text="{Binding BadgeTexto}"
+                                                   FontSize="11"
+                                                   TextColor="#CBD5E1"
+                                                   VerticalOptions="Center" />
+                                        </HorizontalStackLayout>
+
+                                        <!-- Título de la obra -->
+                                        <Label Grid.Row="2"
+                                               Text="{Binding Titulo}"
+                                               FontSize="15"
+                                               FontAttributes="Bold"
+                                               TextColor="#FFFFFF"
+                                               LineBreakMode="TailTruncation" />
+
+                                        <!-- Ubicación y Breve Descripción -->
+                                        <VerticalStackLayout Grid.Row="3" Spacing="2">
+                                            <Label Text="{Binding Ubicacion, StringFormat='📍 {0}'}"
+                                                   FontSize="11"
+                                                   TextColor="#FFDE00"
+                                                   LineBreakMode="TailTruncation" />
+                                            <Label Text="{Binding Descripcion}"
+                                                   FontSize="11"
+                                                   TextColor="#94A3B8"
+                                                   MaxLines="2"
+                                                   LineBreakMode="TailTruncation" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+
+                <!-- 4. SECCIÓN: ¿POR QUÉ ELEGIR CONSTRUCCIONES DURÁN? (VALORES DE EMPRESA) -->
+                <Border StrokeShape="RoundRectangle 22"
+                        Stroke="#1E3A6E"
+                        BackgroundColor="#0B1B3D"
+                        Padding="18">
+                    <VerticalStackLayout Spacing="14">
+                        <Label Text="GARANTÍA Y CONFIANZA" FontSize="11" FontAttributes="Bold" TextColor="#FFDE00" />
+                        <Label Text="¿Por qué construir con nosotros?" FontSize="18" FontAttributes="Bold" TextColor="#FFFFFF" />
+
+                        <VerticalStackLayout Spacing="12">
+                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                <Label Text="⭐" FontSize="18" VerticalOptions="Center" />
+                                <VerticalStackLayout>
+                                    <Label Text="+15 Años de Experiencia" FontSize="13" FontAttributes="Bold" TextColor="#FFFFFF" />
+                                    <Label Text="Trayectoria sólida ejecutando proyectos de diversa envergadura." FontSize="11" TextColor="#94A3B8" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                <Label Text="🛡️" FontSize="18" VerticalOptions="Center" />
+                                <VerticalStackLayout>
+                                    <Label Text="Materiales Certificados y Garantía" FontSize="13" FontAttributes="Bold" TextColor="#FFFFFF" />
+                                    <Label Text="Trabajamos con proveedores líderes y ensayos de calidad de hormigón." FontSize="11" TextColor="#94A3B8" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                <Label Text="⏱️" FontSize="18" VerticalOptions="Center" />
+                                <VerticalStackLayout>
+                                    <Label Text="Cumplimiento Estricto de Plazos" FontSize="13" FontAttributes="Bold" TextColor="#FFFFFF" />
+                                    <Label Text="Cronograma de obra detallado para entregar tu proyecto a tiempo." FontSize="11" TextColor="#94A3B8" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+
+                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                <Label Text="📋" FontSize="18" VerticalOptions="Center" />
+                                <VerticalStackLayout>
+                                    <Label Text="Presupuestos Transparentes" FontSize="13" FontAttributes="Bold" TextColor="#FFFFFF" />
+                                    <Label Text="Cómputos métricos claros y contratos por ítem sin sorpresas." FontSize="11" TextColor="#94A3B8" />
+                                </VerticalStackLayout>
+                            </HorizontalStackLayout>
+                        </VerticalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- 5. BANNER FINAL CALL-TO-ACTION (COTIZAR AHORA) -->
+                <Border StrokeShape="RoundRectangle 22"
+                        Stroke="#FFDE00"
+                        StrokeThickness="1.5"
+                        BackgroundColor="#06142E"
+                        Padding="20">
+                    <Border.Shadow>
+                        <Shadow Brush="Black" Offset="0,6" Radius="12" Opacity="0.4" />
+                    </Border.Shadow>
+
+                    <VerticalStackLayout Spacing="14" HorizontalOptions="Center">
+                        <Label Text="¿Listo para comenzar tu obra?"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="#FFDE00"
+                               HorizontalTextAlignment="Center" />
+                        <Label Text="Calcula tu presupuesto estimado ahora o chatea con nuestro equipo técnico por WhatsApp."
+                               FontSize="12"
+                               TextColor="#CBD5E1"
+                               HorizontalTextAlignment="Center" />
+
+                        <Button Text="📐 Iniciar Cotización de Obra"
+                                Command="{Binding NavegarACotizarCommand}"
+                                BackgroundColor="#FFDE00"
+                                TextColor="#07122A"
+                                FontAttributes="Bold"
+                                FontSize="15"
+                                CornerRadius="14"
+                                HeightRequest="52"
+                                Margin="0,4,0,0" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- 6. PIE DE PÁGINA CORPORATIVO -->
+                <VerticalStackLayout Spacing="4" HorizontalOptions="Center" Margin="0,10,0,0">
+                    <Label Text="Construcciones Durán © 2026 • Cel: 77661522"
+                           FontSize="12"
+                           FontAttributes="Bold"
+                           TextColor="#CBD5E1"
+                           HorizontalTextAlignment="Center" />
+                    <Label Text="Empresa Contratista Autorizada • Ingeniería Civil • Obras"
+                           FontSize="10"
+                           TextColor="#64748B"
+                           HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- 7. BOTÓN FLOTANTE CIRCULAR WHATSAPP OFICIAL (SOLO LOGO) -->
+        <Border Grid.Row="0"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Margin="0,0,22,26"
+                WidthRequest="60"
+                HeightRequest="60"
+                StrokeShape="RoundRectangle 30"
+                StrokeThickness="0"
+                BackgroundColor="Transparent">
+            <Border.Shadow>
+                <Shadow Brush="Black" Offset="0,5" Radius="10" Opacity="0.45" />
+            </Border.Shadow>
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ContactarWhatsAppDirectoCommand}" />
+            </Border.GestureRecognizers>
+            <Image Source="ic_whatsapp.png"
+                   WidthRequest="60"
+                   HeightRequest="60"
+                   Aspect="AspectFit"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+        </Border>
+
+        <!-- 8. INDICADOR DE ACTIVIDAD / CARGANDO -->
+        <Grid BackgroundColor="#9907122A"
+              IsVisible="{Binding IsBusy}"
+              InputTransparent="False">
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="12">
+                <ActivityIndicator IsRunning="{Binding IsBusy}" Color="#FFDE00" />
+                <Label Text="Cargando..." TextColor="#FFFFFF" FontSize="13" />
+            </VerticalStackLayout>
+        </Grid>
+
+    </Grid>
+
+</ContentPage>
