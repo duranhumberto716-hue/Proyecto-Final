@@ -197,11 +197,11 @@ public class CotizacionViewModel : BaseViewModel
     {
         if (Application.Current?.Windows.FirstOrDefault()?.Page is Page page)
         {
-            await page.DisplayAlert(titulo, mensaje, "Entendido");
+            await page.DisplayAlertAsync(titulo, mensaje, "Entendido");
         }
         else if (Shell.Current is not null)
         {
-            await Shell.Current.DisplayAlert(titulo, mensaje, "Entendido");
+            await Shell.Current.DisplayAlertAsync(titulo, mensaje, "Entendido");
         }
     }
 }

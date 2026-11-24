@@ -28,10 +28,10 @@
 		<MauiXamlInflator>SourceGen</MauiXamlInflator>
 
 		<!-- Display name -->
-		<ApplicationTitle>Proyecto Final</ApplicationTitle>
+		<ApplicationTitle>Construcciones Duran</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.proyectofinal</ApplicationId>
+		<ApplicationId>com.construccionesduran.app</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
@@ -71,3 +71,4 @@
 	</ItemGroup>
 
 </Project>
+
