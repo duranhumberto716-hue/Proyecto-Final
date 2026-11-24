@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<!--
+		Pruebas unitarias de la lógica de negocio (validaciones, seguridad y modelos).
+		Se enlazan los archivos del proyecto MAUI que NO dependen de la interfaz,
+		así las pruebas corren rápido en cualquier PC con: dotnet test
+	-->
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsPackable>false</IsPackable>
+		<RootNamespace>Construcciones_Duran.Tests</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="..\Construcciones Duran\Models\EntidadBase.cs" Link="Enlazados\EntidadBase.cs" />
+		<Compile Include="..\Construcciones Duran\Models\Cliente.cs" Link="Enlazados\Cliente.cs" />
+		<Compile Include="..\Construcciones Duran\Models\Material.cs" Link="Enlazados\Material.cs" />
+		<Compile Include="..\Construcciones Duran\Models\Empleado.cs" Link="Enlazados\Empleado.cs" />
+		<Compile Include="..\Construcciones Duran\Models\Proveedor.cs" Link="Enlazados\Proveedor.cs" />
+		<Compile Include="..\Construcciones Duran\Models\Usuario.cs" Link="Enlazados\Usuario.cs" />
+		<Compile Include="..\Construcciones Duran\Services\Validador.cs" Link="Enlazados\Validador.cs" />
+		<Compile Include="..\Construcciones Duran\Services\Seguridad.cs" Link="Enlazados\Seguridad.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+		<PackageReference Include="xunit" Version="2.9.3" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+		<PackageReference Include="sqlite-net-pcl" Version="1.9.172" />
+		<PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.11" />
+	</ItemGroup>
+
+</Project>
+

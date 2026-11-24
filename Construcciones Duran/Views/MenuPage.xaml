@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Proyecto_Final.ViewModels"
+             x:Class="Proyecto_Final.Views.MenuPage"
+             x:DataType="vm:MenuViewModel"
+             x:Name="Pagina"
+             BackgroundColor="{StaticResource FondoApp}"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+        <Style x:Key="IconoMenu" TargetType="Label">
+            <Setter Property="FontSize" Value="30" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="TextoMenu" TargetType="Label">
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="SubtextoMenu" TargetType="Label">
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="TextColor" Value="{StaticResource TextoSecundario}" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+        </Style>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16,24" Spacing="18">
+
+            <!-- Encabezado -->
+            <Border Style="{StaticResource Tarjeta}" Stroke="{StaticResource Acento}">
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                    <Image Source="logo_construcciones_duran.png" HeightRequest="56" WidthRequest="56" Aspect="AspectFit" />
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                        <Label Text="{Binding Bienvenida}" FontSize="17" FontAttributes="Bold" TextColor="{StaticResource Acento}" />
+                        <Label Text="{Binding RolUsuario}" Style="{StaticResource TextoDetalle}" />
+                    </VerticalStackLayout>
+                    <Button Grid.Column="2" Text="⏻" Command="{Binding CerrarSesionCommand}"
+                            Style="{StaticResource BotonIcono}" BackgroundColor="{StaticResource Peligro}"
+                            SemanticProperties.Description="Cerrar sesión" />
+                </Grid>
+            </Border>
+
+            <!-- Operaciones -->
+            <Label Text="🏗️ Operaciones" Style="{StaticResource TituloSeccion}" />
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                <Border Style="{StaticResource TarjetaMenu}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="MainPage" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
+                        <Label Text="🏠" Style="{StaticResource IconoMenu}" />
+                        <Label Text="Catálogo de obras" Style="{StaticResource TextoMenu}" />
+                        <Label Text="Proyectos realizados" Style="{StaticResource SubtextoMenu}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource TarjetaMenu}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="CotizacionPage" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
+                        <Label Text="🧮" Style="{StaticResource IconoMenu}" />
+                        <Label Text="Cotizar obra" Style="{StaticResource TextoMenu}" />
+                        <Label Text="Envío por WhatsApp" Style="{StaticResource SubtextoMenu}" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- CRUD -->
+            <Label Text="🗂️ Gestión de datos (CRUD)" Style="{StaticResource TituloSeccion}" />
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+                <Border Style="{StaticResource TarjetaMenu}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="ClientesPage" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
+                        <Label Text="👥" Style="{StaticResource IconoMenu}" />
+                        <Label Text="Clientes" Style="{StaticResource TextoMenu}" />
+                        <Label Text="Integrante 1" Style="{StaticResource SubtextoMenu}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource TarjetaMenu}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="MaterialesPage" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
+                        <Label Text="🧱" Style="{StaticResource IconoMenu}" />
+                        <Label Text="Materiales" Style="{StaticResource TextoMenu}" />
+                        <Label Text="Integrante 2" Style="{StaticResource SubtextoMenu}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Row="1" Style="{StaticResource TarjetaMenu}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="EmpleadosPage" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
+                        <Label Text="👷" Style="{StaticResource IconoMenu}" />
+                        <Label Text="Personal" Style="{StaticResource TextoMenu}" />
+                        <Label Text="Integrante 3" Style="{StaticResource SubtextoMenu}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource TarjetaMenu}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="ProveedoresPage" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
+                        <Label Text="🚚" Style="{StaticResource IconoMenu}" />
+                        <Label Text="Proveedores" Style="{StaticResource TextoMenu}" />
+                        <Label Text="Integrante 4" Style="{StaticResource SubtextoMenu}" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <!-- Información -->
+            <Label Text="📊 Información" Style="{StaticResource TituloSeccion}" />
+            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
+                <Border Style="{StaticResource TarjetaMenu}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="ReportePage?tipo=clientes" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
+                        <Label Text="📈" Style="{StaticResource IconoMenu}" />
+                        <Label Text="Reporte de clientes" Style="{StaticResource TextoMenu}" />
+                        <Label Text="Integrante 1" Style="{StaticResource SubtextoMenu}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Column="1" Style="{StaticResource TarjetaMenu}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="ReportePage?tipo=inventario" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
+                        <Label Text="💵" Style="{StaticResource IconoMenu}" />
+                        <Label Text="Reporte de inventario" Style="{StaticResource TextoMenu}" />
+                        <Label Text="Integrante 2" Style="{StaticResource SubtextoMenu}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Row="1" Style="{StaticResource TarjetaMenu}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="ReportePage?tipo=personal" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
+                        <Label Text="🧾" Style="{StaticResource IconoMenu}" />
+                        <Label Text="Reporte de personal" Style="{StaticResource TextoMenu}" />
+                        <Label Text="Integrante 3" Style="{StaticResource SubtextoMenu}" />
+                    </VerticalStackLayout>
+                </Border>
+                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource TarjetaMenu}">
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="ReportePage?tipo=proveedores" />
+                    </Border.GestureRecognizers>
+                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
+                        <Label Text="⭐" Style="{StaticResource IconoMenu}" />
+                        <Label Text="Reporte de proveedores" Style="{StaticResource TextoMenu}" />
+                        <Label Text="Integrante 4" Style="{StaticResource SubtextoMenu}" />
+                    </VerticalStackLayout>
+                </Border>
+            </Grid>
+
+            <Border Style="{StaticResource TarjetaMenu}" MinimumHeightRequest="0" Padding="16">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="OdsPage" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <Label Text="🌎" FontSize="30" VerticalOptions="Center" />
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
+                        <Label Text="ODS y acerca del proyecto" Style="{StaticResource TextoItem}" />
+                        <Label Text="Objetivos de Desarrollo Sostenible, empresa y equipo" Style="{StaticResource TextoDetalle}" />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
+

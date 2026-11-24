@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- Paleta corporativa de Construcciones Durán -->
+    <Color x:Key="FondoApp">#07122A</Color>
+    <Color x:Key="FondoTarjeta">#0B1B3D</Color>
+    <Color x:Key="FondoCampo">#10244D</Color>
+    <Color x:Key="BordeTarjeta">#1E3A6E</Color>
+    <Color x:Key="Acento">#FFDE00</Color>
+    <Color x:Key="TextoClaro">#FFFFFF</Color>
+    <Color x:Key="TextoSuave">#CBD5E1</Color>
+    <Color x:Key="TextoSecundario">#94A3B8</Color>
+    <Color x:Key="Peligro">#B91C1C</Color>
+
+    <Style x:Key="Tarjeta" TargetType="Border">
+        <Setter Property="StrokeShape" Value="RoundRectangle 18" />
+        <Setter Property="Stroke" Value="{StaticResource BordeTarjeta}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="BackgroundColor" Value="{StaticResource FondoTarjeta}" />
+        <Setter Property="Padding" Value="16" />
+    </Style>
+
+    <Style x:Key="TituloSeccion" TargetType="Label">
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource Acento}" />
+    </Style>
+
+    <Style x:Key="Etiqueta" TargetType="Label">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" Value="{StaticResource TextoSuave}" />
+    </Style>
+
+    <Style x:Key="TextoItem" TargetType="Label">
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
+    </Style>
+
+    <Style x:Key="TextoDetalle" TargetType="Label">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="TextColor" Value="{StaticResource TextoSecundario}" />
+    </Style>
+
+    <Style x:Key="Campo" TargetType="Entry">
+        <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
+        <Setter Property="PlaceholderColor" Value="#64748B" />
+        <Setter Property="BackgroundColor" Value="{StaticResource FondoCampo}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+    </Style>
+
+    <Style x:Key="Selector" TargetType="Picker">
+        <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
+        <Setter Property="TitleColor" Value="#64748B" />
+        <Setter Property="BackgroundColor" Value="{StaticResource FondoCampo}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+    </Style>
+
+    <Style x:Key="SelectorFecha" TargetType="DatePicker">
+        <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource FondoCampo}" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Format" Value="dd/MM/yyyy" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+    </Style>
+
+    <Style x:Key="BotonPrimario" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource Acento}" />
+        <Setter Property="TextColor" Value="{StaticResource FondoApp}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="MinimumHeightRequest" Value="46" />
+    </Style>
+
+    <Style x:Key="BotonSecundario" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource BordeTarjeta}" />
+        <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="MinimumHeightRequest" Value="46" />
+    </Style>
+
+    <Style x:Key="BotonIcono" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource BordeTarjeta}" />
+        <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="WidthRequest" Value="46" />
+        <Setter Property="HeightRequest" Value="42" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <Style x:Key="BuscadorEstilo" TargetType="SearchBar">
+        <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
+        <Setter Property="PlaceholderColor" Value="#64748B" />
+        <Setter Property="CancelButtonColor" Value="{StaticResource Acento}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource FondoCampo}" />
+    </Style>
+
+    <!-- Tarjeta del menú principal -->
+    <Style x:Key="TarjetaMenu" TargetType="Border">
+        <Setter Property="StrokeShape" Value="RoundRectangle 18" />
+        <Setter Property="Stroke" Value="{StaticResource BordeTarjeta}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="BackgroundColor" Value="{StaticResource FondoTarjeta}" />
+        <Setter Property="Padding" Value="12,16" />
+        <Setter Property="MinimumHeightRequest" Value="118" />
+    </Style>
+</ResourceDictionary>
+

@@ -6,7 +6,8 @@
              x:Class="Proyecto_Final.MainPage"
              x:DataType="vm:MainViewModel"
              BackgroundColor="#07122A"
-             Shell.NavBarIsVisible="False">
+             Title="Catálogo de obras"
+             Shell.NavBarIsVisible="True">
 
     <Grid>
         <!-- CONTENIDO PRINCIPAL SCROLLEABLE -->

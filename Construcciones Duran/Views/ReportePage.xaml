@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Proyecto_Final.ViewModels"
+             xmlns:models="clr-namespace:Proyecto_Final.Models"
+             x:Class="Proyecto_Final.Views.ReportePage"
+             x:DataType="vm:ReporteViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource FondoApp}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+
+            <!-- Encabezado -->
+            <Border Style="{StaticResource Tarjeta}" Stroke="{StaticResource Acento}">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="{Binding Title}" Style="{StaticResource TituloSeccion}" />
+                        <Label Text="{Binding Descripcion}" Style="{StaticResource TextoDetalle}" />
+                        <Label Text="{Binding FechaGeneracion}" Style="{StaticResource TextoDetalle}" FontSize="11" />
+                    </VerticalStackLayout>
+                    <Button Grid.Column="1" Text="🔄" Command="{Binding ActualizarCommand}"
+                            Style="{StaticResource BotonIcono}" VerticalOptions="Center"
+                            SemanticProperties.Description="Actualizar reporte" />
+                </Grid>
+            </Border>
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{StaticResource Acento}" />
+
+            <!-- Indicadores (KPI) en cuadrícula de 2 columnas -->
+            <FlexLayout BindableLayout.ItemsSource="{Binding Indicadores}" Wrap="Wrap"
+                        JustifyContent="SpaceBetween" AlignItems="Start">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:Indicador">
+                        <Border Style="{StaticResource Tarjeta}" Padding="12" Margin="0,0,0,12"
+                                FlexLayout.Basis="48%">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="{Binding Icono}" FontSize="24" />
+                                <Label Text="{Binding Valor}" FontSize="17" FontAttributes="Bold"
+                                       TextColor="{StaticResource Acento}" LineBreakMode="TailTruncation" />
+                                <Label Text="{Binding Titulo}" Style="{StaticResource TextoDetalle}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </FlexLayout>
+
+            <!-- Detalle -->
+            <Label Text="{Binding TituloLista}" Style="{StaticResource TituloSeccion}" />
+
+            <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding Filas}">
+                <BindableLayout.EmptyView>
+                    <Label Text="No hay datos registrados todavía." Style="{StaticResource TextoDetalle}"
+                           HorizontalTextAlignment="Center" Margin="0,20" />
+                </BindableLayout.EmptyView>
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:FilaReporte">
+                        <Border Style="{StaticResource Tarjeta}" Padding="14">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding Destacado}" Value="True">
+                                    <Setter Property="Stroke" Value="#F59E0B" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                                <VerticalStackLayout Spacing="3" VerticalOptions="Center">
+                                    <Label Text="{Binding Titulo}" Style="{StaticResource TextoItem}" />
+                                    <Label Text="{Binding Detalle}" Style="{StaticResource TextoDetalle}" />
+                                </VerticalStackLayout>
+                                <Label Grid.Column="1" Text="{Binding Valor}" FontAttributes="Bold" FontSize="14"
+                                       TextColor="{StaticResource Acento}" VerticalOptions="Center" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+            <Label Text="{Binding NotaPie}" Style="{StaticResource TextoDetalle}" FontAttributes="Italic"
+                   HorizontalTextAlignment="Center" Margin="0,4,0,16" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
+

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Proyecto_Final.ViewModels"
+             xmlns:models="clr-namespace:Proyecto_Final.Models"
+             x:Class="Proyecto_Final.Views.ClientesPage"
+             x:DataType="vm:ClientesViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource FondoApp}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+
+            <!-- FORMULARIO (Crear / Editar) -->
+            <Border Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding TituloFormulario}" Style="{StaticResource TituloSeccion}" />
+
+                    <Label Text="Nombre completo / Razón social *" Style="{StaticResource Etiqueta}" />
+                    <Entry Text="{Binding Actual.Nombre}" Placeholder="Ej: María Rojas" Style="{StaticResource Campo}" />
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="CI / NIT *" Style="{StaticResource Etiqueta}" />
+                            <Entry Text="{Binding Actual.Ci}" Placeholder="Ej: 6543210" Style="{StaticResource Campo}" />
+                        </VerticalStackLayout>
+                        <VerticalStackLayout Grid.Column="1" Spacing="6">
+                            <Label Text="Teléfono *" Style="{StaticResource Etiqueta}" />
+                            <Entry Text="{Binding Actual.Telefono}" Placeholder="Ej: 71234567" Keyboard="Telephone"
+                                   MaxLength="8" Style="{StaticResource Campo}" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <Label Text="Correo electrónico (opcional)" Style="{StaticResource Etiqueta}" />
+                    <Entry Text="{Binding Actual.Correo}" Placeholder="Ej: cliente@gmail.com" Keyboard="Email"
+                           Style="{StaticResource Campo}" />
+
+                    <Label Text="Dirección *" Style="{StaticResource Etiqueta}" />
+                    <Entry Text="{Binding Actual.Direccion}" Placeholder="Ej: Barrio Equipetrol, Calle 4" Style="{StaticResource Campo}" />
+
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,8,0,0">
+                        <Button Text="{Binding TextoBotonGuardar}" Command="{Binding GuardarCommand}" Style="{StaticResource BotonPrimario}" />
+                        <Button Grid.Column="1" Text="🧹 Limpiar" Command="{Binding NuevoCommand}" Style="{StaticResource BotonSecundario}" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- LISTADO -->
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="Clientes registrados" Style="{StaticResource TituloSeccion}" />
+                <Label Grid.Column="1" Text="{Binding TotalRegistros, StringFormat='{0} registro(s)'}"
+                       Style="{StaticResource TextoDetalle}" VerticalOptions="Center" />
+            </Grid>
+
+            <SearchBar Text="{Binding Busqueda}" Placeholder="Buscar por nombre, CI o teléfono"
+                       Style="{StaticResource BuscadorEstilo}" />
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{StaticResource Acento}" />
+
+            <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding Items}">
+                <BindableLayout.EmptyView>
+                    <Label Text="No hay clientes para mostrar." Style="{StaticResource TextoDetalle}"
+                           HorizontalTextAlignment="Center" Margin="0,20" />
+                </BindableLayout.EmptyView>
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:Cliente">
+                        <Border Style="{StaticResource Tarjeta}" Padding="14">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                                <VerticalStackLayout Spacing="3" VerticalOptions="Center">
+                                    <Label Text="{Binding Nombre}" Style="{StaticResource TextoItem}" />
+                                    <Label Text="{Binding Resumen}" Style="{StaticResource TextoDetalle}" />
+                                    <Label Text="{Binding Detalle}" Style="{StaticResource TextoDetalle}" />
+                                </VerticalStackLayout>
+                                <HorizontalStackLayout Grid.Column="1" Spacing="6" VerticalOptions="Center">
+                                    <Button Text="✏️" Style="{StaticResource BotonIcono}"
+                                            Command="{Binding EditarCommand, Source={RelativeSource AncestorType={x:Type vm:ClientesViewModel}}, x:DataType=vm:ClientesViewModel}"
+                                            CommandParameter="{Binding .}" />
+                                    <Button Text="🗑️" Style="{StaticResource BotonIcono}" BackgroundColor="{StaticResource Peligro}"
+                                            Command="{Binding EliminarCommand, Source={RelativeSource AncestorType={x:Type vm:ClientesViewModel}}, x:DataType=vm:ClientesViewModel}"
+                                            CommandParameter="{Binding .}" />
+                                </HorizontalStackLayout>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
+

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Proyecto_Final.ViewModels"
+             x:Class="Proyecto_Final.Views.RegistroPage"
+             x:DataType="vm:RegistroViewModel"
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource FondoApp}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24,24" Spacing="16" MaximumWidthRequest="480">
+            <Label Text="Crea tu cuenta para acceder al sistema de Construcciones Durán."
+                   TextColor="{StaticResource TextoSuave}" FontSize="13" />
+
+            <Border Style="{StaticResource Tarjeta}" Padding="20">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="📝 Datos de la cuenta" Style="{StaticResource TituloSeccion}" />
+
+                    <Label Text="Nombre completo *" Style="{StaticResource Etiqueta}" />
+                    <Entry Text="{Binding NombreCompleto}" Placeholder="Ej: Juan Pérez" Style="{StaticResource Campo}" />
+
+                    <Label Text="Usuario *" Style="{StaticResource Etiqueta}" />
+                    <Entry Text="{Binding Usuario}" Placeholder="Mínimo 4 caracteres" Style="{StaticResource Campo}"
+                           IsSpellCheckEnabled="False" />
+
+                    <Label Text="Contraseña *" Style="{StaticResource Etiqueta}" />
+                    <Entry Text="{Binding Contrasena}" Placeholder="Mínimo 6 caracteres" IsPassword="True"
+                           Style="{StaticResource Campo}" />
+
+                    <Label Text="Confirmar contraseña *" Style="{StaticResource Etiqueta}" />
+                    <Entry Text="{Binding Confirmacion}" Placeholder="Repita la contraseña" IsPassword="True"
+                           Style="{StaticResource Campo}" />
+
+                    <Button Text="Crear cuenta" Command="{Binding RegistrarCommand}"
+                            Style="{StaticResource BotonPrimario}" Margin="0,8,0,0" />
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                                       Color="{StaticResource Acento}" />
+                    <Button Text="Volver al inicio de sesión" Command="{Binding VolverCommand}"
+                            Style="{StaticResource BotonSecundario}" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
+

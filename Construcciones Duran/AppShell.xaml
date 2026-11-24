@@ -3,13 +3,23 @@
     x:Class="Proyecto_Final.AppShell"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:local="clr-namespace:Proyecto_Final"
+    xmlns:views="clr-namespace:Proyecto_Final.Views"
     Title="Construcciones Durán"
-    BackgroundColor="#0B1B3D">
+    Shell.FlyoutBehavior="Disabled"
+    Shell.BackgroundColor="#0B1B3D"
+    Shell.ForegroundColor="#FFFFFF"
+    Shell.TitleColor="#FFDE00">
 
+    <!-- Primera pantalla: inicio de sesión -->
     <ShellContent
-        Title="Inicio"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Title="Iniciar sesión"
+        ContentTemplate="{DataTemplate views:LoginPage}"
+        Route="LoginPage" />
+
+    <!-- Menú principal (se navega con //MenuPage después del login) -->
+    <ShellContent
+        Title="Menú"
+        ContentTemplate="{DataTemplate views:MenuPage}"
+        Route="MenuPage" />
 
 </Shell>

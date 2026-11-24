@@ -62,3 +62,38 @@ public class AsyncRelayCommand : ICommand
     public void RaiseCanExecuteChanged() => CanExecuteChanged?.Invoke(this, EventArgs.Empty);
 }
 
+/// <summary>
+/// Comando asíncrono que recibe un parámetro (por ejemplo, el registro a editar o eliminar).
+/// </summary>
+public class AsyncRelayCommand<T> : ICommand
+{
+    private readonly Func<T?, Task> _execute;
+    private bool _isExecuting;
+
+    public AsyncRelayCommand(Func<T?, Task> execute)
+    {
+        _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+    }
+
+    public event EventHandler? CanExecuteChanged;
+
+    public bool CanExecute(object? parameter) => !_isExecuting;
+
+    public async void Execute(object? parameter)
+    {
+        if (_isExecuting) return;
+
+        try
+        {
+            _isExecuting = true;
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+            await _execute(parameter is T valor ? valor : default);
+        }
+        finally
+        {
+            _isExecuting = false;
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
+    }
+}
+

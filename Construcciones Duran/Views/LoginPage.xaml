@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Proyecto_Final.ViewModels"
+             x:Class="Proyecto_Final.Views.LoginPage"
+             x:DataType="vm:LoginViewModel"
+             BackgroundColor="{StaticResource FondoApp}"
+             Shell.NavBarIsVisible="False">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="24,40" Spacing="18" MaximumWidthRequest="480">
+
+            <Border StrokeShape="RoundRectangle 20" Stroke="#9CACBF" StrokeThickness="1"
+                    BackgroundColor="#061024" Padding="8" HorizontalOptions="Center">
+                <Image Source="logo_construcciones_duran.png" HeightRequest="130" Aspect="AspectFit"
+                       SemanticProperties.Description="Logo Construcciones Durán" />
+            </Border>
+
+            <VerticalStackLayout Spacing="4">
+                <Label Text="CONSTRUCCIONES DURÁN" FontSize="24" FontAttributes="Bold"
+                       TextColor="{StaticResource Acento}" HorizontalTextAlignment="Center" />
+                <Label Text="Sistema de gestión de obras" FontSize="13"
+                       TextColor="{StaticResource TextoSuave}" HorizontalTextAlignment="Center" />
+            </VerticalStackLayout>
+
+            <Border Style="{StaticResource Tarjeta}" Padding="20">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="🔐 Iniciar sesión" Style="{StaticResource TituloSeccion}" />
+
+                    <Label Text="Usuario" Style="{StaticResource Etiqueta}" />
+                    <Entry Text="{Binding Usuario}" Placeholder="Ej: admin" Style="{StaticResource Campo}"
+                           Keyboard="Plain" IsSpellCheckEnabled="False" ReturnType="Next" />
+
+                    <Label Text="Contraseña" Style="{StaticResource Etiqueta}" />
+                    <Entry Text="{Binding Contrasena}" Placeholder="••••••" IsPassword="True"
+                           Style="{StaticResource Campo}" ReturnType="Go"
+                           ReturnCommand="{Binding IniciarSesionCommand}" />
+
+                    <Button Text="Ingresar" Command="{Binding IniciarSesionCommand}"
+                            Style="{StaticResource BotonPrimario}" Margin="0,8,0,0" />
+
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
+                                       Color="{StaticResource Acento}" />
+
+                    <Button Text="¿No tienes cuenta? Regístrate" Command="{Binding IrARegistroCommand}"
+                            BackgroundColor="Transparent" TextColor="{StaticResource Acento}" FontSize="13" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Label Text="Usuario de prueba: admin  •  Contraseña: admin123" FontSize="11"
+                   TextColor="{StaticResource TextoSecundario}" HorizontalTextAlignment="Center" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
+

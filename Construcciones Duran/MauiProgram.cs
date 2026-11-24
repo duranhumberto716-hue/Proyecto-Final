@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Proyecto_Final.Services;
 using Proyecto_Final.ViewModels;
+using Proyecto_Final.Views;
 
 namespace Proyecto_Final;
 
@@ -22,14 +23,37 @@ public static class MauiProgram
         // =========================================================================
         builder.Services.AddSingleton<IProyectoService, ProyectoService>();
         builder.Services.AddSingleton<IWhatsAppService, WhatsAppService>();
+        builder.Services.AddSingleton<DatabaseService>();
+        builder.Services.AddSingleton<SesionService>();
+        builder.Services.AddSingleton<TipoCambioService>();
 
         // REGISTRO DE VIEWMODELS
         builder.Services.AddTransient<MainViewModel>();
         builder.Services.AddTransient<CotizacionViewModel>();
+        builder.Services.AddTransient<LoginViewModel>();
+        builder.Services.AddTransient<RegistroViewModel>();
+        builder.Services.AddTransient<MenuViewModel>();
+        builder.Services.AddTransient<ClientesViewModel>();
+        builder.Services.AddTransient<MaterialesViewModel>();
+        builder.Services.AddTransient<EmpleadosViewModel>();
+        builder.Services.AddTransient<ProveedoresViewModel>();
+        builder.Services.AddTransient<ReporteClientesViewModel>();
+        builder.Services.AddTransient<ReporteInventarioViewModel>();
+        builder.Services.AddTransient<ReportePersonalViewModel>();
+        builder.Services.AddTransient<ReporteProveedoresViewModel>();
 
         // REGISTRO DE PÁGINAS / VISTAS
         builder.Services.AddTransient<MainPage>();
         builder.Services.AddTransient<CotizacionPage>();
+        builder.Services.AddTransient<LoginPage>();
+        builder.Services.AddTransient<RegistroPage>();
+        builder.Services.AddTransient<MenuPage>();
+        builder.Services.AddTransient<ClientesPage>();
+        builder.Services.AddTransient<MaterialesPage>();
+        builder.Services.AddTransient<EmpleadosPage>();
+        builder.Services.AddTransient<ProveedoresPage>();
+        builder.Services.AddTransient<ReportePage>();
+        builder.Services.AddTransient<OdsPage>();
 
 #if DEBUG
         builder.Logging.AddDebug();

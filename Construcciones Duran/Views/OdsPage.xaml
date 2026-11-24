@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Proyecto_Final.Views.OdsPage"
+             Title="ODS y acerca del proyecto"
+             BackgroundColor="{StaticResource FondoApp}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+
+            <!-- Empresa -->
+            <Border Style="{StaticResource Tarjeta}" Stroke="{StaticResource Acento}">
+                <VerticalStackLayout Spacing="6">
+                    <Label Text="🏗️ Construcciones Durán" Style="{StaticResource TituloSeccion}" />
+                    <Label Style="{StaticResource TextoDetalle}" FontSize="13"
+                           Text="Emprendimiento familiar de Santa Cruz de la Sierra, Bolivia, dedicado a la construcción residencial, obra gruesa, remodelaciones y acabados. Esta aplicación digitaliza la gestión de clientes, materiales, personal y proveedores, y permite cotizar obras por WhatsApp." />
+                    <Label Text="📞 77661522  •  📍 Santa Cruz de la Sierra" Style="{StaticResource TextoDetalle}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- ODS -->
+            <Label Text="🌎 Objetivos de Desarrollo Sostenible" Style="{StaticResource TituloSeccion}" />
+            <Label Text="El proyecto contribuye a los siguientes ODS de la Agenda 2030 (pactomundial.org):"
+                   Style="{StaticResource TextoDetalle}" />
+
+            <Border Style="{StaticResource Tarjeta}" Stroke="#A21942">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <Border BackgroundColor="#A21942" StrokeShape="RoundRectangle 12" StrokeThickness="0"
+                            WidthRequest="56" HeightRequest="56" VerticalOptions="Start">
+                        <Label Text="8" FontSize="26" FontAttributes="Bold" TextColor="White"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="4">
+                        <Label Text="Trabajo decente y crecimiento económico" Style="{StaticResource TextoItem}" />
+                        <Label Style="{StaticResource TextoDetalle}"
+                               Text="Registra al personal con salarios iguales o mayores al mínimo nacional y controla la planilla, promoviendo empleo formal en el rubro de la construcción." />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <Border Style="{StaticResource Tarjeta}" Stroke="#FD6925">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <Border BackgroundColor="#FD6925" StrokeShape="RoundRectangle 12" StrokeThickness="0"
+                            WidthRequest="56" HeightRequest="56" VerticalOptions="Start">
+                        <Label Text="9" FontSize="26" FontAttributes="Bold" TextColor="White"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="4">
+                        <Label Text="Industria, innovación e infraestructura" Style="{StaticResource TextoItem}" />
+                        <Label Style="{StaticResource TextoDetalle}"
+                               Text="Incorpora tecnologías emergentes (app móvil, base de datos y APIs) a un pequeño emprendimiento de infraestructura, mejorando su productividad." />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <Border Style="{StaticResource Tarjeta}" Stroke="#FD9D24">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <Border BackgroundColor="#FD9D24" StrokeShape="RoundRectangle 12" StrokeThickness="0"
+                            WidthRequest="56" HeightRequest="56" VerticalOptions="Start">
+                        <Label Text="11" FontSize="24" FontAttributes="Bold" TextColor="White"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="4">
+                        <Label Text="Ciudades y comunidades sostenibles" Style="{StaticResource TextoItem}" />
+                        <Label Style="{StaticResource TextoDetalle}"
+                               Text="Facilita la planificación de viviendas y obras seguras en Santa Cruz, con control de materiales que evita desperdicios." />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <Border Style="{StaticResource Tarjeta}" Stroke="#BF8B2E">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <Border BackgroundColor="#BF8B2E" StrokeShape="RoundRectangle 12" StrokeThickness="0"
+                            WidthRequest="56" HeightRequest="56" VerticalOptions="Start">
+                        <Label Text="12" FontSize="24" FontAttributes="Bold" TextColor="White"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" Spacing="4">
+                        <Label Text="Producción y consumo responsables" Style="{StaticResource TextoItem}" />
+                        <Label Style="{StaticResource TextoDetalle}"
+                               Text="Las alertas de stock mínimo y el reporte de inventario ayudan a comprar solo lo necesario y a elegir proveedores responsables." />
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+
+            <!-- Ejes del modelo educativo -->
+            <Label Text="🎓 Ejes del modelo educativo" Style="{StaticResource TituloSeccion}" />
+            <Border Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Style="{StaticResource TextoDetalle}" FontSize="13"
+                           Text="• Emprendedurismo responsable: solución para un emprendimiento real cercano al grupo." />
+                    <Label Style="{StaticResource TextoDetalle}" FontSize="13"
+                           Text="• Ética y ciudadanía global: respeto a derechos de autor con referencias APA 7." />
+                    <Label Style="{StaticResource TextoDetalle}" FontSize="13"
+                           Text="• Tecnologías emergentes: .NET MAUI, SQLite, API de tipo de cambio y API de WhatsApp." />
+                    <Label Style="{StaticResource TextoDetalle}" FontSize="13"
+                           Text="• Investigación y pensamiento crítico: cada integrante investiga y defiende su módulo." />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Equipo -->
+            <Label Text="👥 Equipo de desarrollo" Style="{StaticResource TituloSeccion}" />
+            <Border Style="{StaticResource Tarjeta}">
+                <VerticalStackLayout Spacing="8">
+                    <!-- TODO: reemplazar por los nombres reales de los integrantes -->
+                    <Label Text="Integrante 1  •  CRUD Clientes + Reporte de clientes" Style="{StaticResource TextoDetalle}" FontSize="13" />
+                    <Label Text="Integrante 2  •  CRUD Materiales + Reporte de inventario (API)" Style="{StaticResource TextoDetalle}" FontSize="13" />
+                    <Label Text="Integrante 3  •  CRUD Personal + Reporte de personal" Style="{StaticResource TextoDetalle}" FontSize="13" />
+                    <Label Text="Integrante 4  •  CRUD Proveedores + Reporte de proveedores" Style="{StaticResource TextoDetalle}" FontSize="13" />
+                    <Label Text="Aplicaciones Móviles I  •  Ing. Robert Wilson Cruz Claure  •  II/2026"
+                           Style="{StaticResource TextoDetalle}" FontSize="11" Margin="0,6,0,0" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
+
