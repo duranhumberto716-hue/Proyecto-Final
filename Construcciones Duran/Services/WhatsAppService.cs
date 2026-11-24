@@ -9,7 +9,7 @@ namespace Proyecto_Final.Services;
 public class WhatsAppService : IWhatsAppService
 {
     // =========================================================================
-    // ⚠️ NÚMERO OFICIAL DE WHATSAPP: 77661522
+    // NÚMERO OFICIAL DE WHATSAPP: 77661522
     // =========================================================================
     // Para la API de WhatsApp (wa.me) se requiere el formato internacional
     // con el código de país de Bolivia (591): 59177661522.
@@ -40,7 +40,7 @@ public class WhatsAppService : IWhatsAppService
     /// </summary>
     public async Task<bool> AbrirChatDirectoAsync(string? numeroTelefono = null)
     {
-        const string saludoGeneral = "¡Hola Construcciones Durán! 👋 Me comunico desde su aplicación móvil para consultar sobre sus servicios de obras y cotizaciones.";
+        const string saludoGeneral = "Hola Construcciones Durán, me comunico desde su aplicación móvil para consultar sobre sus servicios de obras y cotizaciones.";
         return await EnviarMensajeAsync(saludoGeneral, numeroTelefono);
     }
 

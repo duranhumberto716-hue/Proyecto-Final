@@ -8,48 +8,107 @@
              Shell.NavBarIsVisible="False">
 
     <ScrollView>
-        <VerticalStackLayout Padding="24,40" Spacing="18" MaximumWidthRequest="480">
+        <VerticalStackLayout Padding="24,36" Spacing="22" MaximumWidthRequest="440" VerticalOptions="Center">
 
-            <Border StrokeShape="RoundRectangle 20" Stroke="#9CACBF" StrokeThickness="1"
-                    BackgroundColor="#061024" Padding="8" HorizontalOptions="Center">
-                <Image Source="logo_construcciones_duran.png" HeightRequest="130" Aspect="AspectFit"
-                       SemanticProperties.Description="Logo Construcciones Durán" />
-            </Border>
-
-            <VerticalStackLayout Spacing="4">
-                <Label Text="CONSTRUCCIONES DURÁN" FontSize="24" FontAttributes="Bold"
-                       TextColor="{StaticResource Acento}" HorizontalTextAlignment="Center" />
-                <Label Text="Sistema de gestión de obras" FontSize="13"
-                       TextColor="{StaticResource TextoSuave}" HorizontalTextAlignment="Center" />
+            <!-- MARCA Y BIENVENIDA -->
+            <VerticalStackLayout Spacing="12" HorizontalOptions="Center">
+                <Border StrokeShape="RoundRectangle 22" Stroke="{StaticResource BrochaBorde}" StrokeThickness="1"
+                        BackgroundColor="#08142C" Padding="10" HorizontalOptions="Center">
+                    <Image Source="logo_construcciones_duran.png" HeightRequest="96" WidthRequest="96" Aspect="AspectFit"
+                           SemanticProperties.Description="Logo Construcciones Durán" />
+                </Border>
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="Construcciones Durán" FontSize="24" FontAttributes="Bold"
+                           TextColor="{StaticResource TextoClaro}" HorizontalTextAlignment="Center" />
+                    <Label Text="Obras, cotizaciones y gestión profesional" FontSize="13"
+                           TextColor="{StaticResource TextoSecundario}" HorizontalTextAlignment="Center" />
+                </VerticalStackLayout>
             </VerticalStackLayout>
 
-            <Border Style="{StaticResource Tarjeta}" Padding="20">
-                <VerticalStackLayout Spacing="12">
-                    <Label Text="🔐 Iniciar sesión" Style="{StaticResource TituloSeccion}" />
+            <!-- TARJETA PRINCIPAL DE INICIO DE SESIÓN -->
+            <Border Style="{StaticResource Tarjeta}" Padding="22">
+                <VerticalStackLayout Spacing="14">
 
-                    <Label Text="Usuario" Style="{StaticResource Etiqueta}" />
-                    <Entry Text="{Binding Usuario}" Placeholder="Ej: admin" Style="{StaticResource Campo}"
-                           Keyboard="Plain" IsSpellCheckEnabled="False" ReturnType="Next" />
+                    <VerticalStackLayout Spacing="2">
+                        <Label Text="Bienvenido de nuevo" FontSize="19" FontAttributes="Bold" TextColor="{StaticResource TextoClaro}" />
+                        <Label Text="Ingresa con tu cuenta para continuar." Style="{StaticResource TextoDetalle}" />
+                    </VerticalStackLayout>
 
-                    <Label Text="Contraseña" Style="{StaticResource Etiqueta}" />
-                    <Entry Text="{Binding Contrasena}" Placeholder="••••••" IsPassword="True"
-                           Style="{StaticResource Campo}" ReturnType="Go"
-                           ReturnCommand="{Binding IniciarSesionCommand}" />
+                    <!-- Aviso de error inline -->
+                    <Border IsVisible="{Binding HayError}" BackgroundColor="#3B1117"
+                            Stroke="{StaticResource BrochaPeligro}" StrokeThickness="1"
+                            StrokeShape="RoundRectangle 10" Padding="12,10">
+                        <Label Text="{Binding MensajeError}" FontSize="12" TextColor="#FCA5A5" />
+                    </Border>
 
-                    <Button Text="Ingresar" Command="{Binding IniciarSesionCommand}"
-                            Style="{StaticResource BotonPrimario}" Margin="0,8,0,0" />
+                    <!-- Campo Usuario con icono -->
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Usuario" Style="{StaticResource Etiqueta}" />
+                        <Border Style="{StaticResource CajaCampo}">
+                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                                <Path Data="M12,12 C14.21,12 16,10.21 16,8 C16,5.79 14.21,4 12,4 C9.79,4 8,5.79 8,8 C8,10.21 9.79,12 12,12 Z M12,14 C9.33,14 4,15.34 4,18 V20 H20 V18 C20,15.34 14.67,14 12,14 Z"
+                                      Fill="{StaticResource TextoSecundario}" WidthRequest="18" HeightRequest="18"
+                                      Aspect="Uniform" VerticalOptions="Center" />
+                                <Entry Grid.Column="1" Text="{Binding Usuario}" Placeholder="Nombre de usuario"
+                                       Style="{StaticResource CampoSinFondo}" Keyboard="Plain"
+                                       IsSpellCheckEnabled="False" ReturnType="Next" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Campo Contraseña con icono y botón Ver/Ocultar -->
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Contraseña" Style="{StaticResource Etiqueta}" />
+                        <Border Style="{StaticResource CajaCampo}">
+                            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="10">
+                                <Path Data="M18,8 H17 V6 C17,3.24 14.76,1 12,1 C9.24,1 7,3.24 7,6 V8 H6 C4.9,8 4,8.9 4,10 V20 C4,21.1 4.9,22 6,22 H18 C19.1,22 20,21.1 20,20 V10 C20,8.9 19.1,8 18,8 Z M12,17 C10.9,17 10,16.1 10,15 C10,13.9 10.9,13 12,13 C13.1,13 14,13.9 14,15 C14,16.1 13.1,17 12,17 Z M15.1,8 H8.9 V6 C8.9,4.29 10.29,2.9 12,2.9 C13.71,2.9 15.1,4.29 15.1,6 V8 Z"
+                                      Fill="{StaticResource TextoSecundario}" WidthRequest="18" HeightRequest="18"
+                                      Aspect="Uniform" VerticalOptions="Center" />
+                                <Entry Grid.Column="1" Text="{Binding Contrasena}" Placeholder="Ingresa tu contraseña"
+                                       IsPassword="{Binding OcultarContrasena}" Style="{StaticResource CampoSinFondo}"
+                                       ReturnType="Go" ReturnCommand="{Binding IniciarSesionCommand}" />
+                                <Button Grid.Column="2" Text="{Binding TextoVerContrasena}"
+                                        Command="{Binding AlternarContrasenaCommand}"
+                                        BackgroundColor="Transparent" TextColor="{StaticResource Acento}"
+                                        FontSize="12" FontAttributes="Bold" Padding="6,0" MinimumWidthRequest="44" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Botón principal -->
+                    <Button Text="Iniciar sesión" Command="{Binding IniciarSesionCommand}"
+                            Style="{StaticResource BotonPrimario}" Margin="0,6,0,0" />
 
                     <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
                                        Color="{StaticResource Acento}" />
 
-                    <Button Text="¿No tienes cuenta? Regístrate" Command="{Binding IrARegistroCommand}"
-                            BackgroundColor="Transparent" TextColor="{StaticResource Acento}" FontSize="13" />
+                    <!-- Separador y acceso para clientes nuevos -->
+                    <Grid ColumnDefinitions="*,Auto,*" ColumnSpacing="10" Margin="0,4,0,0">
+                        <BoxView HeightRequest="1" Color="{StaticResource BordeTarjeta}" VerticalOptions="Center" />
+                        <Label Grid.Column="1" Text="¿Eres cliente nuevo?" Style="{StaticResource TextoDetalle}" />
+                        <BoxView Grid.Column="2" HeightRequest="1" Color="{StaticResource BordeTarjeta}" VerticalOptions="Center" />
+                    </Grid>
+
+                    <Button Text="Crear cuenta de cliente" Command="{Binding IrARegistroCommand}"
+                            Style="{StaticResource BotonSecundario}" />
+
                 </VerticalStackLayout>
             </Border>
 
-            <Label Text="Usuario de prueba: admin  •  Contraseña: admin123" FontSize="11"
-                   TextColor="{StaticResource TextoSecundario}" HorizontalTextAlignment="Center" />
+            <!-- ACCESO RÁPIDO PARA PRUEBA / DEFENSA POR ROL -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="Acceso rápido de demostración (toca para rellenar)"
+                       FontSize="11" TextColor="{StaticResource TextoSecundario}" HorizontalTextAlignment="Center" />
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="8">
+                    <Button Grid.Column="0" Text="Admin" Command="{Binding AutocompletarDemoCommand}"
+                            CommandParameter="admin" Style="{StaticResource BotonChip}" />
+                    <Button Grid.Column="1" Text="Trabajador" Command="{Binding AutocompletarDemoCommand}"
+                            CommandParameter="trabajador" Style="{StaticResource BotonChip}" />
+                    <Button Grid.Column="2" Text="Cliente" Command="{Binding AutocompletarDemoCommand}"
+                            CommandParameter="cliente" Style="{StaticResource BotonChip}" />
+                </Grid>
+            </VerticalStackLayout>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
-

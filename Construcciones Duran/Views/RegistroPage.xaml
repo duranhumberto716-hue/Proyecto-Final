@@ -8,38 +8,79 @@
              BackgroundColor="{StaticResource FondoApp}">
 
     <ScrollView>
-        <VerticalStackLayout Padding="24,24" Spacing="16" MaximumWidthRequest="480">
-            <Label Text="Crea tu cuenta para acceder al sistema de Construcciones Durán."
-                   TextColor="{StaticResource TextoSuave}" FontSize="13" />
+        <VerticalStackLayout Padding="24,24" Spacing="18" MaximumWidthRequest="440">
+
+            <VerticalStackLayout Spacing="6">
+                <Border BackgroundColor="{StaticResource FondoTarjetaSuave}" StrokeShape="RoundRectangle 8"
+                        StrokeThickness="0" Padding="10,4" HorizontalOptions="Start">
+                    <Label Text="CUENTA DE CLIENTE" FontSize="10" FontAttributes="Bold"
+                           TextColor="{StaticResource Acento}" CharacterSpacing="0.8" />
+                </Border>
+                <Label Text="Crea tu cuenta gratuita" FontSize="22" FontAttributes="Bold"
+                       TextColor="{StaticResource TextoClaro}" />
+                <Label Text="Explora nuestras obras realizadas y solicita cotizaciones personalizadas por WhatsApp."
+                       Style="{StaticResource TextoDetalle}" FontSize="13" />
+            </VerticalStackLayout>
 
             <Border Style="{StaticResource Tarjeta}" Padding="20">
-                <VerticalStackLayout Spacing="10">
-                    <Label Text="📝 Datos de la cuenta" Style="{StaticResource TituloSeccion}" />
+                <VerticalStackLayout Spacing="12">
 
-                    <Label Text="Nombre completo *" Style="{StaticResource Etiqueta}" />
-                    <Entry Text="{Binding NombreCompleto}" Placeholder="Ej: Juan Pérez" Style="{StaticResource Campo}" />
+                    <!-- Error inline -->
+                    <Border IsVisible="{Binding HayError}" BackgroundColor="#3B1117"
+                            Stroke="{StaticResource BrochaPeligro}" StrokeThickness="1"
+                            StrokeShape="RoundRectangle 10" Padding="12,10">
+                        <Label Text="{Binding MensajeError}" FontSize="12" TextColor="#FCA5A5" />
+                    </Border>
 
-                    <Label Text="Usuario *" Style="{StaticResource Etiqueta}" />
-                    <Entry Text="{Binding Usuario}" Placeholder="Mínimo 4 caracteres" Style="{StaticResource Campo}"
-                           IsSpellCheckEnabled="False" />
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Nombre completo *" Style="{StaticResource Etiqueta}" />
+                        <Border Style="{StaticResource CajaCampo}">
+                            <Entry Text="{Binding NombreCompleto}" Placeholder="Ej: Juan Pérez"
+                                   Style="{StaticResource CampoSinFondo}" />
+                        </Border>
+                    </VerticalStackLayout>
 
-                    <Label Text="Contraseña *" Style="{StaticResource Etiqueta}" />
-                    <Entry Text="{Binding Contrasena}" Placeholder="Mínimo 6 caracteres" IsPassword="True"
-                           Style="{StaticResource Campo}" />
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Nombre de usuario *" Style="{StaticResource Etiqueta}" />
+                        <Border Style="{StaticResource CajaCampo}">
+                            <Entry Text="{Binding Usuario}" Placeholder="Mínimo 4 caracteres (sin espacios)"
+                                   Style="{StaticResource CampoSinFondo}" IsSpellCheckEnabled="False" />
+                        </Border>
+                    </VerticalStackLayout>
 
-                    <Label Text="Confirmar contraseña *" Style="{StaticResource Etiqueta}" />
-                    <Entry Text="{Binding Confirmacion}" Placeholder="Repita la contraseña" IsPassword="True"
-                           Style="{StaticResource Campo}" />
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Contraseña *" Style="{StaticResource Etiqueta}" />
+                        <Border Style="{StaticResource CajaCampo}">
+                            <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                                <Entry Text="{Binding Contrasena}" Placeholder="Mínimo 6 caracteres"
+                                       IsPassword="{Binding OcultarContrasena}" Style="{StaticResource CampoSinFondo}" />
+                                <Button Grid.Column="1" Text="{Binding TextoVerContrasena}"
+                                        Command="{Binding AlternarContrasenaCommand}"
+                                        BackgroundColor="Transparent" TextColor="{StaticResource Acento}"
+                                        FontSize="12" FontAttributes="Bold" Padding="6,0" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
 
-                    <Button Text="Crear cuenta" Command="{Binding RegistrarCommand}"
+                    <VerticalStackLayout Spacing="6">
+                        <Label Text="Confirmar contraseña *" Style="{StaticResource Etiqueta}" />
+                        <Border Style="{StaticResource CajaCampo}">
+                            <Entry Text="{Binding Confirmacion}" Placeholder="Repite tu contraseña"
+                                   IsPassword="{Binding OcultarContrasena}" Style="{StaticResource CampoSinFondo}" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <Button Text="Crear mi cuenta" Command="{Binding RegistrarCommand}"
                             Style="{StaticResource BotonPrimario}" Margin="0,8,0,0" />
                     <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}"
                                        Color="{StaticResource Acento}" />
-                    <Button Text="Volver al inicio de sesión" Command="{Binding VolverCommand}"
+                    <Button Text="Ya tengo cuenta • Volver" Command="{Binding VolverCommand}"
                             Style="{StaticResource BotonSecundario}" />
                 </VerticalStackLayout>
             </Border>
+
+            <Label Text="Las cuentas registradas desde esta pantalla obtienen el perfil Cliente (solo catálogo y cotizaciones)."
+                   Style="{StaticResource TextoDetalle}" FontSize="11" HorizontalTextAlignment="Center" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
-

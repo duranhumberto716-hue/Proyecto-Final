@@ -4,7 +4,7 @@ namespace Proyecto_Final.Views;
 
 /// <summary>
 /// Pantalla común para los 4 formularios de información.
-/// Según el parámetro "tipo" de la ruta (ReportePage?tipo=clientes) carga el ViewModel
+/// Según el parámetro "tipo" de la ruta (ReportePage?tipo=obras) carga el ViewModel
 /// del integrante correspondiente.
 /// </summary>
 public partial class ReportePage : ContentPage, IQueryAttributable
@@ -24,14 +24,13 @@ public partial class ReportePage : ContentPage, IQueryAttributable
 
         _viewModel = tipo switch
         {
-            "inventario" => _servicios.GetRequiredService<ReporteInventarioViewModel>(),
             "personal" => _servicios.GetRequiredService<ReportePersonalViewModel>(),
-            "proveedores" => _servicios.GetRequiredService<ReporteProveedoresViewModel>(),
-            _ => _servicios.GetRequiredService<ReporteClientesViewModel>()
+            "materiales" or "inventario" => _servicios.GetRequiredService<ReporteInventarioViewModel>(),
+            "avances" => _servicios.GetRequiredService<ReporteAvancesViewModel>(),
+            _ => _servicios.GetRequiredService<ReporteObrasViewModel>()
         };
 
         BindingContext = _viewModel;
         await _viewModel.ActualizarAsync();
     }
 }
-

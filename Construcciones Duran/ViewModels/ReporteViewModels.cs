@@ -55,88 +55,56 @@ public abstract class ReporteViewModel : BaseViewModel
 
     protected abstract Task GenerarAsync();
 
-    protected void AgregarIndicador(string icono, string titulo, string valor) =>
-        Indicadores.Add(new Indicador { Icono = icono, Titulo = titulo, Valor = valor });
+    protected void AgregarIndicador(string etiqueta, string titulo, string valor) =>
+        Indicadores.Add(new Indicador { Etiqueta = etiqueta, Titulo = titulo, Valor = valor });
 
     protected void AgregarFila(string titulo, string detalle, string valor, bool destacado = false) =>
         Filas.Add(new FilaReporte { Titulo = titulo, Detalle = detalle, Valor = valor, Destacado = destacado });
 }
 
-/// <summary>Información de clientes (Integrante 1).</summary>
-public class ReporteClientesViewModel : ReporteViewModel
+/// <summary>Información de obras (Integrante 1).</summary>
+public class ReporteObrasViewModel : ReporteViewModel
 {
-    public ReporteClientesViewModel(DatabaseService db) : base(db)
+    public ReporteObrasViewModel(DatabaseService db) : base(db)
     {
-        Title = "Reporte de Clientes";
-        Descripcion = "Resumen de la cartera de clientes registrada en la base de datos.";
-        TituloLista = "Clientes registrados recientemente";
+        Title = "Reporte de Obras";
+        Descripcion = "Resumen general de obras registradas, estados y presupuesto comprometido.";
+        TituloLista = "Obras por estado y presupuesto";
     }
 
     protected override async Task GenerarAsync()
     {
-        var clientes = await Db.ListarAsync<Cliente>();
-        var inicioMes = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
-        var nuevosMes = clientes.Count(c => c.FechaRegistro >= inicioMes);
-        var conCorreo = clientes.Count(c => !string.IsNullOrWhiteSpace(c.Correo));
-        var porcentajeCorreo = clientes.Count == 0 ? 0 : conCorreo * 100.0 / clientes.Count;
+        var obras = await Db.ListarAsync<Obra>();
+        var enEjecucion = obras.Count(o => o.EnEjecucion);
+        var finalizadas = obras.Count(o => string.Equals(o.Estado, "Finalizada", StringComparison.OrdinalIgnoreCase));
+        var presupuestoTotal = obras.Sum(o => o.Presupuesto);
 
-        AgregarIndicador("👥", "Total clientes", clientes.Count.ToString());
-        AgregarIndicador("🆕", "Nuevos este mes", nuevosMes.ToString());
-        AgregarIndicador("✉️", "Con correo", $"{porcentajeCorreo:N0}%");
-        AgregarIndicador("📅", "Último registro",
-            clientes.Count == 0 ? "-" : clientes.Max(c => c.FechaRegistro).ToString("dd/MM/yyyy"));
+        AgregarIndicador("OBRAS", "Total de obras", obras.Count.ToString());
+        AgregarIndicador("EJEC", "En ejecución", enEjecucion.ToString());
+        AgregarIndicador("FIN", "Finalizadas", finalizadas.ToString());
+        AgregarIndicador("PRESUP", "Presupuesto total", $"Bs {presupuestoTotal:N2}");
 
-        foreach (var c in clientes.OrderByDescending(c => c.FechaRegistro).Take(10))
-            AgregarFila(c.Nombre, c.Resumen, c.FechaRegistro.ToString("dd/MM/yyyy"), c.FechaRegistro >= inicioMes);
-
-        NotaPie = "Los clientes resaltados se registraron durante el mes actual.";
-    }
-}
-
-/// <summary>
-/// Información del inventario (Integrante 2). Usa la API externa de tipo de cambio
-/// para mostrar el valor del inventario en dólares.
-/// </summary>
-public class ReporteInventarioViewModel : ReporteViewModel
-{
-    private readonly TipoCambioService _tipoCambio;
-
-    public ReporteInventarioViewModel(DatabaseService db, TipoCambioService tipoCambio) : base(db)
-    {
-        _tipoCambio = tipoCambio;
-        Title = "Reporte de Inventario";
-        Descripcion = "Valorización del inventario de materiales en Bs y USD (tipo de cambio desde API externa).";
-        TituloLista = "Valor por categoría y alertas de stock";
-    }
-
-    protected override async Task GenerarAsync()
-    {
-        var materiales = await Db.ListarAsync<Material>();
-        var (bsPorDolar, enLinea) = await _tipoCambio.ObtenerBsPorDolarAsync();
-        var valorBs = materiales.Sum(m => m.ValorTotal);
-        var stockBajo = materiales.Where(m => m.StockBajo).ToList();
-
-        AgregarIndicador("📦", "Materiales", materiales.Count.ToString());
-        AgregarIndicador("💰", "Valor total (Bs)", $"Bs {valorBs:N2}");
-        AgregarIndicador("💵", "Valor total (USD)", $"$ {valorBs / bsPorDolar:N2}");
-        AgregarIndicador("⚠️", "Con stock bajo", stockBajo.Count.ToString());
-
-        foreach (var grupo in materiales.GroupBy(m => m.Categoria).OrderByDescending(g => g.Sum(m => m.ValorTotal)))
+        foreach (var grupo in obras.GroupBy(o => o.Estado).OrderByDescending(g => g.Sum(o => o.Presupuesto)))
         {
-            var total = grupo.Sum(m => m.ValorTotal);
-            AgregarFila($"📁 {grupo.Key}", $"{grupo.Count()} material(es)  •  $ {total / bsPorDolar:N2}", $"Bs {total:N2}");
+            var monto = grupo.Sum(o => o.Presupuesto);
+            AgregarFila(grupo.Key,
+                $"{grupo.Count()} obra(s)  •  Promedio Bs {grupo.Average(o => o.Presupuesto):N2}",
+                $"Bs {monto:N2}",
+                string.Equals(grupo.Key, "En ejecución", StringComparison.OrdinalIgnoreCase));
         }
 
-        foreach (var m in stockBajo)
-            AgregarFila($"⚠️ {m.Nombre}", $"Quedan {m.Cantidad:N2} {m.Unidad} (mínimo {m.StockMinimo:N0})", "Reponer", true);
+        foreach (var obra in obras.OrderByDescending(o => o.Presupuesto).Take(5))
+        {
+            AgregarFila(obra.Nombre,
+                $"{obra.Cliente}  •  {obra.Estado}",
+                $"Bs {obra.Presupuesto:N2}");
+        }
 
-        NotaPie = enLinea
-            ? $"Tipo de cambio en línea (open.er-api.com): 1 USD = Bs {bsPorDolar:N2}"
-            : $"Sin conexión a la API. Se usa el tipo de cambio oficial: 1 USD = Bs {bsPorDolar:N2}";
+        NotaPie = "Las obras resaltadas se encuentran actualmente en ejecución.";
     }
 }
 
-/// <summary>Información del personal (Integrante 3).</summary>
+/// <summary>Información del personal (Integrante 2).</summary>
 public class ReportePersonalViewModel : ReporteViewModel
 {
     public ReportePersonalViewModel(DatabaseService db) : base(db)
@@ -153,14 +121,14 @@ public class ReportePersonalViewModel : ReporteViewModel
         var planilla = activos.Sum(e => e.SalarioMensual);
         var antiguedad = activos.Count == 0 ? 0 : activos.Average(e => (DateTime.Today - e.FechaIngreso).TotalDays / 365.25);
 
-        AgregarIndicador("👷", "Total personal", empleados.Count.ToString());
-        AgregarIndicador("🟢", "Activos", activos.Count.ToString());
-        AgregarIndicador("💸", "Planilla mensual", $"Bs {planilla:N2}");
-        AgregarIndicador("⏳", "Antigüedad prom.", $"{antiguedad:N1} años");
+        AgregarIndicador("TOTAL", "Total personal", empleados.Count.ToString());
+        AgregarIndicador("ACTIVO", "Activos", activos.Count.ToString());
+        AgregarIndicador("PLANILLA", "Planilla mensual", $"Bs {planilla:N2}");
+        AgregarIndicador("TIEMPO", "Antigüedad prom.", $"{antiguedad:N1} años");
 
         foreach (var grupo in activos.GroupBy(e => e.Cargo).OrderByDescending(g => g.Sum(e => e.SalarioMensual)))
         {
-            AgregarFila($"🦺 {grupo.Key}",
+            AgregarFila(grupo.Key,
                 $"{grupo.Count()} persona(s)  •  Promedio Bs {grupo.Average(e => e.SalarioMensual):N2}",
                 $"Bs {grupo.Sum(e => e.SalarioMensual):N2}");
         }
@@ -172,39 +140,88 @@ public class ReportePersonalViewModel : ReporteViewModel
     }
 }
 
-/// <summary>Información de proveedores (Integrante 4).</summary>
-public class ReporteProveedoresViewModel : ReporteViewModel
+/// <summary>
+/// Información de materiales (Integrante 3). Usa la API externa de tipo de cambio
+/// para mostrar el valor del inventario en dólares.
+/// </summary>
+public class ReporteInventarioViewModel : ReporteViewModel
 {
-    public ReporteProveedoresViewModel(DatabaseService db) : base(db)
+    private readonly TipoCambioService _tipoCambio;
+
+    public ReporteInventarioViewModel(DatabaseService db, TipoCambioService tipoCambio) : base(db)
     {
-        Title = "Reporte de Proveedores";
-        Descripcion = "Cobertura de rubros y calificación de los proveedores de la empresa.";
-        TituloLista = "Proveedores por rubro";
+        _tipoCambio = tipoCambio;
+        Title = "Reporte de Materiales";
+        Descripcion = "Valorización del inventario de materiales en Bs y USD (tipo de cambio desde API externa).";
+        TituloLista = "Valor por categoría y alertas de stock";
     }
 
     protected override async Task GenerarAsync()
     {
-        var proveedores = await Db.ListarAsync<Proveedor>();
-        var promedio = proveedores.Count == 0 ? 0 : proveedores.Average(p => p.Calificacion);
-        var mejor = proveedores.OrderByDescending(p => p.Calificacion).FirstOrDefault();
+        var materiales = await Db.ListarAsync<Material>();
+        var (bsPorDolar, enLinea) = await _tipoCambio.ObtenerBsPorDolarAsync();
+        var valorBs = materiales.Sum(m => m.ValorTotal);
+        var stockBajo = materiales.Where(m => m.StockBajo).ToList();
 
-        AgregarIndicador("🚚", "Total proveedores", proveedores.Count.ToString());
-        AgregarIndicador("📁", "Rubros cubiertos", proveedores.Select(p => p.Rubro).Distinct().Count().ToString());
-        AgregarIndicador("⭐", "Calificación prom.", $"{promedio:N1} / 5");
-        AgregarIndicador("🏆", "Mejor calificado", mejor?.Empresa ?? "-");
+        AgregarIndicador("ITEMS", "Materiales", materiales.Count.ToString());
+        AgregarIndicador("BS", "Valor total (Bs)", $"Bs {valorBs:N2}");
+        AgregarIndicador("USD", "Valor total (USD)", $"$ {valorBs / bsPorDolar:N2}");
+        AgregarIndicador("ALERTA", "Con stock bajo", stockBajo.Count.ToString());
 
-        foreach (var grupo in proveedores.GroupBy(p => p.Rubro).OrderBy(g => g.Key))
+        foreach (var grupo in materiales.GroupBy(m => m.Categoria).OrderByDescending(g => g.Sum(m => m.ValorTotal)))
         {
-            var top = grupo.OrderByDescending(p => p.Calificacion).First();
-            AgregarFila($"📁 {grupo.Key}",
-                $"{grupo.Count()} proveedor(es)  •  Recomendado: {top.Empresa}",
-                top.Estrellas);
+            var total = grupo.Sum(m => m.ValorTotal);
+            AgregarFila(grupo.Key, $"{grupo.Count()} material(es)  •  $ {total / bsPorDolar:N2}", $"Bs {total:N2}");
         }
 
-        var bajos = proveedores.Count(p => p.Calificacion <= 2);
-        NotaPie = bajos > 0
-            ? $"Hay {bajos} proveedor(es) con calificación baja (≤ 2). Se recomienda evaluarlos."
-            : "Todos los proveedores tienen una calificación aceptable.";
+        foreach (var m in stockBajo)
+            AgregarFila($"[Stock bajo] {m.Nombre}", $"Quedan {m.Cantidad:N2} {m.Unidad} (mínimo {m.StockMinimo:N0})", "Reponer", true);
+
+        NotaPie = enLinea
+            ? $"Tipo de cambio en línea (open.er-api.com): 1 USD = Bs {bsPorDolar:N2}"
+            : $"Sin conexión a la API. Se usa el tipo de cambio oficial: 1 USD = Bs {bsPorDolar:N2}";
     }
 }
 
+/// <summary>Información de avances de obra (Integrante 4).</summary>
+public class ReporteAvancesViewModel : ReporteViewModel
+{
+    public ReporteAvancesViewModel(DatabaseService db) : base(db)
+    {
+        Title = "Reporte de Avances";
+        Descripcion = "Seguimiento del progreso físico acumulado por cada obra en ejecución.";
+        TituloLista = "Último avance registrado por obra";
+    }
+
+    protected override async Task GenerarAsync()
+    {
+        var avances = await Db.ListarAsync<Avance>();
+        var porObra = avances
+            .GroupBy(a => a.NombreObra)
+            .Select(g => g.OrderByDescending(a => a.Fecha).ThenByDescending(a => a.Porcentaje).First())
+            .OrderByDescending(a => a.Porcentaje)
+            .ToList();
+
+        var promedio = porObra.Count == 0 ? 0 : porObra.Average(a => a.Porcentaje);
+        var completadas = porObra.Count(a => a.Completado);
+        var ultimaFecha = avances.Count == 0 ? "-" : avances.Max(a => a.Fecha).ToString("dd/MM/yyyy");
+
+        AgregarIndicador("REG", "Registros totales", avances.Count.ToString());
+        AgregarIndicador("PROM", "Avance promedio", $"{promedio:N0}%");
+        AgregarIndicador("100%", "Obras completadas", completadas.ToString());
+        AgregarIndicador("FECHA", "Último reporte", ultimaFecha);
+
+        foreach (var a in porObra)
+        {
+            AgregarFila(a.NombreObra,
+                $"{a.Etapa}  •  Resp: {a.Responsable}  •  {a.Fecha:dd/MM/yyyy}",
+                a.PorcentajeTexto,
+                a.Porcentaje < 30);
+        }
+
+        var rezagadas = porObra.Count(a => a.Porcentaje < 30);
+        NotaPie = rezagadas > 0
+            ? $"Hay {rezagadas} obra(s) resaltada(s) en etapa inicial (< 30% de avance)."
+            : "Todas las obras con seguimiento superan el 30% de avance.";
+    }
+}

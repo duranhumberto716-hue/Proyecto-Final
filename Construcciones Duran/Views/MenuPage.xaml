@@ -2,175 +2,465 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:Proyecto_Final.ViewModels"
+             xmlns:models="clr-namespace:Proyecto_Final.Models"
              x:Class="Proyecto_Final.Views.MenuPage"
              x:DataType="vm:MenuViewModel"
              x:Name="Pagina"
              BackgroundColor="{StaticResource FondoApp}"
              Shell.NavBarIsVisible="False">
 
-    <ContentPage.Resources>
-        <Style x:Key="IconoMenu" TargetType="Label">
-            <Setter Property="FontSize" Value="30" />
-            <Setter Property="HorizontalTextAlignment" Value="Center" />
-        </Style>
-        <Style x:Key="TextoMenu" TargetType="Label">
-            <Setter Property="FontSize" Value="14" />
-            <Setter Property="FontAttributes" Value="Bold" />
-            <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
-            <Setter Property="HorizontalTextAlignment" Value="Center" />
-        </Style>
-        <Style x:Key="SubtextoMenu" TargetType="Label">
-            <Setter Property="FontSize" Value="11" />
-            <Setter Property="TextColor" Value="{StaticResource TextoSecundario}" />
-            <Setter Property="HorizontalTextAlignment" Value="Center" />
-        </Style>
-    </ContentPage.Resources>
-
     <ScrollView>
-        <VerticalStackLayout Padding="16,24" Spacing="18">
+        <VerticalStackLayout Padding="20,22,20,36" Spacing="20" MaximumWidthRequest="1000">
 
-            <!-- Encabezado -->
-            <Border Style="{StaticResource Tarjeta}" Stroke="{StaticResource Acento}">
-                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
-                    <Image Source="logo_construcciones_duran.png" HeightRequest="56" WidthRequest="56" Aspect="AspectFit" />
-                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                        <Label Text="{Binding Bienvenida}" FontSize="17" FontAttributes="Bold" TextColor="{StaticResource Acento}" />
-                        <Label Text="{Binding RolUsuario}" Style="{StaticResource TextoDetalle}" />
-                    </VerticalStackLayout>
-                    <Button Grid.Column="2" Text="⏻" Command="{Binding CerrarSesionCommand}"
-                            Style="{StaticResource BotonIcono}" BackgroundColor="{StaticResource Peligro}"
-                            SemanticProperties.Description="Cerrar sesión" />
-                </Grid>
-            </Border>
+            <!-- BARRA SUPERIOR MINIMALISTA -->
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                <Border StrokeShape="RoundRectangle 12" Stroke="{StaticResource BrochaBorde}" StrokeThickness="1"
+                        BackgroundColor="#08142C" Padding="5" WidthRequest="48" HeightRequest="48" VerticalOptions="Center">
+                    <Image Source="logo_construcciones_duran.png" Aspect="AspectFit" />
+                </Border>
 
-            <!-- Operaciones -->
-            <Label Text="🏗️ Operaciones" Style="{StaticResource TituloSeccion}" />
-            <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
-                <Border Style="{StaticResource TarjetaMenu}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="MainPage" />
-                    </Border.GestureRecognizers>
-                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
-                        <Label Text="🏠" Style="{StaticResource IconoMenu}" />
-                        <Label Text="Catálogo de obras" Style="{StaticResource TextoMenu}" />
-                        <Label Text="Proyectos realizados" Style="{StaticResource SubtextoMenu}" />
-                    </VerticalStackLayout>
-                </Border>
-                <Border Grid.Column="1" Style="{StaticResource TarjetaMenu}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="CotizacionPage" />
-                    </Border.GestureRecognizers>
-                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
-                        <Label Text="🧮" Style="{StaticResource IconoMenu}" />
-                        <Label Text="Cotizar obra" Style="{StaticResource TextoMenu}" />
-                        <Label Text="Envío por WhatsApp" Style="{StaticResource SubtextoMenu}" />
-                    </VerticalStackLayout>
-                </Border>
+                <VerticalStackLayout Grid.Column="1" Spacing="3" VerticalOptions="Center">
+                    <HorizontalStackLayout Spacing="8" VerticalOptions="Center">
+                        <Label Text="{Binding Saludo}" FontSize="18" FontAttributes="Bold"
+                               TextColor="{StaticResource TextoClaro}" VerticalOptions="Center" />
+                        <Border BackgroundColor="{StaticResource FondoTarjetaSuave}" StrokeShape="RoundRectangle 6"
+                                Stroke="{StaticResource BrochaAcento}" StrokeThickness="1" Padding="7,2" VerticalOptions="Center">
+                            <Label Text="{Binding RolEtiqueta}" FontSize="9" FontAttributes="Bold"
+                                   TextColor="{StaticResource Acento}" CharacterSpacing="0.6" />
+                        </Border>
+                    </HorizontalStackLayout>
+                    <Label Text="{Binding SubtituloPanel}" Style="{StaticResource TextoDetalle}" />
+                </VerticalStackLayout>
+
+                <Button Grid.Column="2" Text="Salir" Command="{Binding CerrarSesionCommand}"
+                        Style="{StaticResource BotonPildoraSuave}" VerticalOptions="Center"
+                        SemanticProperties.Description="Cerrar sesión" />
             </Grid>
 
-            <!-- CRUD -->
-            <Label Text="🗂️ Gestión de datos (CRUD)" Style="{StaticResource TituloSeccion}" />
-            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
-                <Border Style="{StaticResource TarjetaMenu}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="ClientesPage" />
-                    </Border.GestureRecognizers>
-                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
-                        <Label Text="👥" Style="{StaticResource IconoMenu}" />
-                        <Label Text="Clientes" Style="{StaticResource TextoMenu}" />
-                        <Label Text="Integrante 1" Style="{StaticResource SubtextoMenu}" />
-                    </VerticalStackLayout>
-                </Border>
-                <Border Grid.Column="1" Style="{StaticResource TarjetaMenu}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="MaterialesPage" />
-                    </Border.GestureRecognizers>
-                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
-                        <Label Text="🧱" Style="{StaticResource IconoMenu}" />
-                        <Label Text="Materiales" Style="{StaticResource TextoMenu}" />
-                        <Label Text="Integrante 2" Style="{StaticResource SubtextoMenu}" />
-                    </VerticalStackLayout>
-                </Border>
-                <Border Grid.Row="1" Style="{StaticResource TarjetaMenu}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="EmpleadosPage" />
-                    </Border.GestureRecognizers>
-                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
-                        <Label Text="👷" Style="{StaticResource IconoMenu}" />
-                        <Label Text="Personal" Style="{StaticResource TextoMenu}" />
-                        <Label Text="Integrante 3" Style="{StaticResource SubtextoMenu}" />
-                    </VerticalStackLayout>
-                </Border>
-                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource TarjetaMenu}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="ProveedoresPage" />
-                    </Border.GestureRecognizers>
-                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
-                        <Label Text="🚚" Style="{StaticResource IconoMenu}" />
-                        <Label Text="Proveedores" Style="{StaticResource TextoMenu}" />
-                        <Label Text="Integrante 4" Style="{StaticResource SubtextoMenu}" />
-                    </VerticalStackLayout>
-                </Border>
-            </Grid>
+            <BoxView HeightRequest="1" Color="{StaticResource BordeTarjeta}" Opacity="0.6" />
 
-            <!-- Información -->
-            <Label Text="📊 Información" Style="{StaticResource TituloSeccion}" />
-            <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="12" RowSpacing="12">
-                <Border Style="{StaticResource TarjetaMenu}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="ReportePage?tipo=clientes" />
-                    </Border.GestureRecognizers>
-                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
-                        <Label Text="📈" Style="{StaticResource IconoMenu}" />
-                        <Label Text="Reporte de clientes" Style="{StaticResource TextoMenu}" />
-                        <Label Text="Integrante 1" Style="{StaticResource SubtextoMenu}" />
-                    </VerticalStackLayout>
-                </Border>
-                <Border Grid.Column="1" Style="{StaticResource TarjetaMenu}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="ReportePage?tipo=inventario" />
-                    </Border.GestureRecognizers>
-                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
-                        <Label Text="💵" Style="{StaticResource IconoMenu}" />
-                        <Label Text="Reporte de inventario" Style="{StaticResource TextoMenu}" />
-                        <Label Text="Integrante 2" Style="{StaticResource SubtextoMenu}" />
-                    </VerticalStackLayout>
-                </Border>
-                <Border Grid.Row="1" Style="{StaticResource TarjetaMenu}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="ReportePage?tipo=personal" />
-                    </Border.GestureRecognizers>
-                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
-                        <Label Text="🧾" Style="{StaticResource IconoMenu}" />
-                        <Label Text="Reporte de personal" Style="{StaticResource TextoMenu}" />
-                        <Label Text="Integrante 3" Style="{StaticResource SubtextoMenu}" />
-                    </VerticalStackLayout>
-                </Border>
-                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource TarjetaMenu}">
-                    <Border.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="ReportePage?tipo=proveedores" />
-                    </Border.GestureRecognizers>
-                    <VerticalStackLayout Spacing="4" VerticalOptions="Center">
-                        <Label Text="⭐" Style="{StaticResource IconoMenu}" />
-                        <Label Text="Reporte de proveedores" Style="{StaticResource TextoMenu}" />
-                        <Label Text="Integrante 4" Style="{StaticResource SubtextoMenu}" />
-                    </VerticalStackLayout>
-                </Border>
-            </Grid>
+            <!-- ===================================================================== -->
+            <!-- DASHBOARD 1: ADMINISTRADOR (MINIMALISTA, ESTRUCTURADO, KPIs EN VIVO)  -->
+            <!-- ===================================================================== -->
+            <VerticalStackLayout Spacing="20" IsVisible="{Binding EsAdministrador}">
 
-            <Border Style="{StaticResource TarjetaMenu}" MinimumHeightRequest="0" Padding="16">
-                <Border.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="OdsPage" />
-                </Border.GestureRecognizers>
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
-                    <Label Text="🌎" FontSize="30" VerticalOptions="Center" />
-                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                        <Label Text="ODS y acerca del proyecto" Style="{StaticResource TextoItem}" />
-                        <Label Text="Objetivos de Desarrollo Sostenible, empresa y equipo" Style="{StaticResource TextoDetalle}" />
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="RESUMEN GENERAL" Style="{StaticResource SubtituloSeccion}" />
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+                        <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource TarjetaMinimal}">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="Obras activas" Style="{StaticResource TextoDetalle}" />
+                                <Label Text="{Binding KpiObrasActivas}" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource Acento}" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource TarjetaMinimal}">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="Personal activo" Style="{StaticResource TextoDetalle}" />
+                                <Label Text="{Binding KpiPersonalActivo}" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource TextoClaro}" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource TarjetaMinimal}">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding TieneAlertaStock}" Value="True">
+                                    <Setter Property="Stroke" Value="{StaticResource BrochaAlerta}" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="Alertas de stock" Style="{StaticResource TextoDetalle}" />
+                                <Label Text="{Binding KpiStockBajo}" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource Alerta}" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource TarjetaMinimal}">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="Avance promedio" Style="{StaticResource TextoDetalle}" />
+                                <Label Text="{Binding KpiAvancePromedio}" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource Exito}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="GESTIÓN DE DATOS Y REPORTES" Style="{StaticResource SubtituloSeccion}" />
+
+                    <Border Style="{StaticResource TarjetaMinimal}">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border Style="{StaticResource CajaIcono}">
+                                <Path Data="M12,7 V3 H2 V21 H22 V7 H12 Z M6,19 H4 V17 H6 V19 Z M6,15 H4 V13 H6 V15 Z M6,11 H4 V9 H6 V11 Z M6,7 H4 V5 H6 V7 Z M10,19 H8 V17 H10 V19 Z M10,15 H8 V13 H10 V15 Z M10,11 H8 V9 H10 V11 Z M10,7 H8 V5 H10 V7 Z M20,19 H12 V17 H14 V15 H12 V13 H14 V11 H12 V9 H20 V19 Z M18,11 H16 V13 H18 V11 Z M18,15 H16 V17 H18 V15 Z"
+                                      Fill="{StaticResource Acento}" WidthRequest="20" HeightRequest="20"
+                                      Aspect="Uniform" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Obras" Style="{StaticResource TextoItem}" />
+                                <Label Text="{Binding ResumenObras}" Style="{StaticResource TextoDetalle}" />
+                            </VerticalStackLayout>
+                            <HorizontalStackLayout Grid.Column="2" Spacing="6" VerticalOptions="Center">
+                                <Button Text="CRUD" Command="{Binding NavegarCommand}" CommandParameter="ObrasPage"
+                                        Style="{StaticResource BotonPildoraAcento}" />
+                                <Button Text="Reporte" Command="{Binding NavegarCommand}" CommandParameter="ReportePage?tipo=obras"
+                                        Style="{StaticResource BotonPildoraSuave}" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <Border Style="{StaticResource TarjetaMinimal}">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border Style="{StaticResource CajaIcono}">
+                                <Path Data="M16,11 C17.66,11 18.99,9.66 18.99,8 C18.99,6.34 17.66,5 16,5 C14.34,5 13,6.34 13,8 C13,9.66 14.34,11 16,11 Z M8,11 C9.66,11 10.99,9.66 10.99,8 C10.99,6.34 9.66,5 8,5 C6.34,5 5,6.34 5,8 C5,9.66 6.34,11 8,11 Z M8,13 C5.67,13 1,14.17 1,16.5 V19 H15 V16.5 C15,14.17 10.33,13 8,13 Z M16,13 C15.71,13 15.38,13.02 15.03,13.05 C16.19,13.89 17,15.02 17,16.5 V19 H23 V16.5 C23,14.17 18.33,13 16,13 Z"
+                                      Fill="{StaticResource Acento}" WidthRequest="20" HeightRequest="20"
+                                      Aspect="Uniform" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Personal" Style="{StaticResource TextoItem}" />
+                                <Label Text="{Binding ResumenPersonal}" Style="{StaticResource TextoDetalle}" />
+                            </VerticalStackLayout>
+                            <HorizontalStackLayout Grid.Column="2" Spacing="6" VerticalOptions="Center">
+                                <Button Text="CRUD" Command="{Binding NavegarCommand}" CommandParameter="EmpleadosPage"
+                                        Style="{StaticResource BotonPildoraAcento}" />
+                                <Button Text="Reporte" Command="{Binding NavegarCommand}" CommandParameter="ReportePage?tipo=personal"
+                                        Style="{StaticResource BotonPildoraSuave}" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <Border Style="{StaticResource TarjetaMinimal}">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border Style="{StaticResource CajaIcono}">
+                                <Path Data="M20,2 H4 C3,2 2,2.9 2,4 V7.01 C2,7.73 2.43,8.35 3,8.7 V20 C3,21.1 4.1,22 5,22 H19 C19.9,22 21,21.1 21,20 V8.7 C21.57,8.35 22,7.73 22,7.01 V4 C22,2.9 21,2 20,2 Z M15,14 H9 V12 H15 V14 Z M20,7 H4 V4 H20 V7 Z"
+                                      Fill="{StaticResource Acento}" WidthRequest="20" HeightRequest="20"
+                                      Aspect="Uniform" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Materiales" Style="{StaticResource TextoItem}" />
+                                <Label Text="{Binding ResumenMateriales}" Style="{StaticResource TextoDetalle}" />
+                            </VerticalStackLayout>
+                            <HorizontalStackLayout Grid.Column="2" Spacing="6" VerticalOptions="Center">
+                                <Button Text="CRUD" Command="{Binding NavegarCommand}" CommandParameter="MaterialesPage"
+                                        Style="{StaticResource BotonPildoraAcento}" />
+                                <Button Text="Reporte" Command="{Binding NavegarCommand}" CommandParameter="ReportePage?tipo=materiales"
+                                        Style="{StaticResource BotonPildoraSuave}" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <Border Style="{StaticResource TarjetaMinimal}">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border Style="{StaticResource CajaIcono}">
+                                <Path Data="M16,6 L18.29,8.29 L13.41,13.17 L9.41,9.17 L2,16.59 L3.41,18 L9.41,12 L13.41,16 L19.71,9.71 L22,12 V6 H16 Z"
+                                      Fill="{StaticResource Acento}" WidthRequest="20" HeightRequest="20"
+                                      Aspect="Uniform" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Avances" Style="{StaticResource TextoItem}" />
+                                <Label Text="{Binding ResumenAvances}" Style="{StaticResource TextoDetalle}" />
+                            </VerticalStackLayout>
+                            <HorizontalStackLayout Grid.Column="2" Spacing="6" VerticalOptions="Center">
+                                <Button Text="CRUD" Command="{Binding NavegarCommand}" CommandParameter="AvancesPage"
+                                        Style="{StaticResource BotonPildoraAcento}" />
+                                <Button Text="Reporte" Command="{Binding NavegarCommand}" CommandParameter="ReportePage?tipo=avances"
+                                        Style="{StaticResource BotonPildoraSuave}" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="ATENCIÓN AL CLIENTE Y PROYECTO" Style="{StaticResource SubtituloSeccion}" />
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                        <Border Grid.Column="0" Style="{StaticResource TarjetaMinimal}" Padding="12">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="MainPage" />
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                                <Path Data="M10,20 V14 H14 V20 H19 V12 H22 L12,3 L2,12 H5 V20 H10 Z"
+                                      Fill="{StaticResource Acento}" WidthRequest="20" HeightRequest="20"
+                                      Aspect="Uniform" HorizontalOptions="Center" />
+                                <Label Text="Catálogo" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource TextoClaro}" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource TarjetaMinimal}" Padding="12">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="CotizacionPage" />
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                                <Path Data="M19,3 H5 C3.9,3 3,3.9 3,5 V19 C3,20.1 3.9,21 5,21 H19 C20.1,21 21,20.1 21,19 V5 C21,3.9 20.1,3 19,3 Z M13,7 H18 V8.5 H13 V7 Z M13,15.5 H18 V17 H13 V15.5 Z M13,13 H18 V14.5 H13 V13 Z M6,7.5 H8 V5.5 H9.5 V7.5 H11.5 V9 H9.5 V11 H8 V9 H6 V7.5 Z"
+                                      Fill="{StaticResource Acento}" WidthRequest="20" HeightRequest="20"
+                                      Aspect="Uniform" HorizontalOptions="Center" />
+                                <Label Text="Cotizador" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource TextoClaro}" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="2" Style="{StaticResource TarjetaMinimal}" Padding="12">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="OdsPage" />
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                                <Path Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M11,19.93 C7.05,19.44 4,16.08 4,12 C4,11.38 4.08,10.79 4.21,10.21 L9,15 V16 C9,17.1 9.9,18 11,18 V19.93 Z M17.9,17.39 C17.64,16.58 16.9,16 16,16 H15 V13 C15,12.45 14.55,12 14,12 H8 V10 H10 C10.55,10 11,9.55 11,9 V7 H13 C14.1,7 15,6.1 15,5 V4.59 C17.93,5.78 20,8.65 20,12 C20,14.08 19.2,15.97 17.9,17.39 Z"
+                                      Fill="{StaticResource Acento}" WidthRequest="20" HeightRequest="20"
+                                      Aspect="Uniform" HorizontalOptions="Center" />
+                                <Label Text="ODS" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource TextoClaro}" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+
+            <!-- ===================================================================== -->
+            <!-- DASHBOARD 2: TRABAJADOR (MINIMALISTA Y ENFOCADO EN OPERACIÓN DE OBRA) -->
+            <!-- ===================================================================== -->
+            <VerticalStackLayout Spacing="20" IsVisible="{Binding EsTrabajador}">
+
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="ESTADO DE OBRA" Style="{StaticResource SubtituloSeccion}" />
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                        <Border Grid.Column="0" Style="{StaticResource TarjetaMinimal}">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="Avance promedio" Style="{StaticResource TextoDetalle}" />
+                                <Label Text="{Binding KpiAvancePromedio}" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource Exito}" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource TarjetaMinimal}">
+                            <Border.Triggers>
+                                <DataTrigger TargetType="Border" Binding="{Binding TieneAlertaStock}" Value="True">
+                                    <Setter Property="Stroke" Value="{StaticResource BrochaAlerta}" />
+                                </DataTrigger>
+                            </Border.Triggers>
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="Materiales en alerta" Style="{StaticResource TextoDetalle}" />
+                                <Label Text="{Binding KpiStockBajo}" FontSize="22" FontAttributes="Bold" TextColor="{StaticResource Alerta}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="TAREAS DE OBRA" Style="{StaticResource SubtituloSeccion}" />
+
+                    <Border Style="{StaticResource TarjetaMinimal}">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border Style="{StaticResource CajaIcono}">
+                                <Path Data="M16,6 L18.29,8.29 L13.41,13.17 L9.41,9.17 L2,16.59 L3.41,18 L9.41,12 L13.41,16 L19.71,9.71 L22,12 V6 H16 Z"
+                                      Fill="{StaticResource Acento}" WidthRequest="20" HeightRequest="20"
+                                      Aspect="Uniform" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Avances de obra" Style="{StaticResource TextoItem}" />
+                                <Label Text="{Binding ResumenAvances}" Style="{StaticResource TextoDetalle}" />
+                            </VerticalStackLayout>
+                            <HorizontalStackLayout Grid.Column="2" Spacing="6" VerticalOptions="Center">
+                                <Button Text="CRUD" Command="{Binding NavegarCommand}" CommandParameter="AvancesPage"
+                                        Style="{StaticResource BotonPildoraAcento}" />
+                                <Button Text="Reporte" Command="{Binding NavegarCommand}" CommandParameter="ReportePage?tipo=avances"
+                                        Style="{StaticResource BotonPildoraSuave}" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+
+                    <Border Style="{StaticResource TarjetaMinimal}">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+                            <Border Style="{StaticResource CajaIcono}">
+                                <Path Data="M20,2 H4 C3,2 2,2.9 2,4 V7.01 C2,7.73 2.43,8.35 3,8.7 V20 C3,21.1 4.1,22 5,22 H19 C19.9,22 21,21.1 21,20 V8.7 C21.57,8.35 22,7.73 22,7.01 V4 C22,2.9 21,2 20,2 Z M15,14 H9 V12 H15 V14 Z M20,7 H4 V4 H20 V7 Z"
+                                      Fill="{StaticResource Acento}" WidthRequest="20" HeightRequest="20"
+                                      Aspect="Uniform" HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2" VerticalOptions="Center">
+                                <Label Text="Materiales en almacén" Style="{StaticResource TextoItem}" />
+                                <Label Text="{Binding ResumenMateriales}" Style="{StaticResource TextoDetalle}" />
+                            </VerticalStackLayout>
+                            <HorizontalStackLayout Grid.Column="2" Spacing="6" VerticalOptions="Center">
+                                <Button Text="CRUD" Command="{Binding NavegarCommand}" CommandParameter="MaterialesPage"
+                                        Style="{StaticResource BotonPildoraAcento}" />
+                                <Button Text="Reporte" Command="{Binding NavegarCommand}" CommandParameter="ReportePage?tipo=materiales"
+                                        Style="{StaticResource BotonPildoraSuave}" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="CONSULTAS" Style="{StaticResource SubtituloSeccion}" />
+                    <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10">
+                        <Border Grid.Column="0" Style="{StaticResource TarjetaMinimal}" Padding="12">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="ReportePage?tipo=obras" />
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                                <Path Data="M12,7 V3 H2 V21 H22 V7 H12 Z M6,19 H4 V17 H6 V19 Z M6,15 H4 V13 H6 V15 Z M6,11 H4 V9 H6 V11 Z M6,7 H4 V5 H6 V7 Z M10,19 H8 V17 H10 V19 Z M10,15 H8 V13 H10 V15 Z M10,11 H8 V9 H10 V11 Z M10,7 H8 V5 H10 V7 Z M20,19 H12 V17 H14 V15 H12 V13 H14 V11 H12 V9 H20 V19 Z"
+                                      Fill="{StaticResource Acento}" WidthRequest="20" HeightRequest="20"
+                                      Aspect="Uniform" HorizontalOptions="Center" />
+                                <Label Text="Obras" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource TextoClaro}" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="1" Style="{StaticResource TarjetaMinimal}" Padding="12">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="MainPage" />
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                                <Path Data="M10,20 V14 H14 V20 H19 V12 H22 L12,3 L2,12 H5 V20 H10 Z"
+                                      Fill="{StaticResource Acento}" WidthRequest="20" HeightRequest="20"
+                                      Aspect="Uniform" HorizontalOptions="Center" />
+                                <Label Text="Catálogo" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource TextoClaro}" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Column="2" Style="{StaticResource TarjetaMinimal}" Padding="12">
+                            <Border.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding NavegarCommand}" CommandParameter="OdsPage" />
+                            </Border.GestureRecognizers>
+                            <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                                <Path Data="M12,2 C6.48,2 2,6.48 2,12 C2,17.52 6.48,22 12,22 C17.52,22 22,17.52 22,12 C22,6.48 17.52,2 12,2 Z M11,19.93 C7.05,19.44 4,16.08 4,12 C4,11.38 4.08,10.79 4.21,10.21 L9,15 V16 C9,17.1 9.9,18 11,18 V19.93 Z M17.9,17.39 C17.64,16.58 16.9,16 16,16 H15 V13 C15,12.45 14.55,12 14,12 H8 V10 H10 C10.55,10 11,9.55 11,9 V7 H13 C14.1,7 15,6.1 15,5 V4.59 C17.93,5.78 20,8.65 20,12 C20,14.08 19.2,15.97 17.9,17.39 Z"
+                                      Fill="{StaticResource Acento}" WidthRequest="20" HeightRequest="20"
+                                      Aspect="Uniform" HorizontalOptions="Center" />
+                                <Label Text="ODS" FontSize="13" FontAttributes="Bold" TextColor="{StaticResource TextoClaro}" HorizontalTextAlignment="Center" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <Label Text="Los módulos de personal, salarios y contratos de obra están reservados al perfil Administrador."
+                       Style="{StaticResource TextoDetalle}" FontSize="11" HorizontalTextAlignment="Center" />
+
+            </VerticalStackLayout>
+
+            <!-- ===================================================================== -->
+            <!-- DASHBOARD 3: CLIENTE (INMEDIATO: OBRAS REALIZADAS + PEDIR INFO,       -->
+            <!--              COTIZACIÓN Y SERVICIOS — SIN APARTADO ODS)               -->
+            <!-- ===================================================================== -->
+            <VerticalStackLayout Spacing="22" IsVisible="{Binding EsCliente}">
+
+                <!-- HERO CORPORATIVO CON ACCIONES DIRECTAS -->
+                <Border Style="{StaticResource Tarjeta}" Stroke="{StaticResource BrochaAcento}" Padding="20">
+                    <VerticalStackLayout Spacing="12">
+                        <Label Text="CONSTRUCCIONES DURÁN • SANTA CRUZ" Style="{StaticResource SubtituloSeccion}" />
+                        <Label Text="Solidez, calidad y compromiso en cada obra" FontSize="20" FontAttributes="Bold"
+                               TextColor="{StaticResource TextoClaro}" />
+                        <Label Text="Conoce nuestras obras entregadas, solicita información directa sobre cualquier proyecto o calcula una cotización estimada al instante."
+                               Style="{StaticResource TextoDetalle}" FontSize="13" />
+
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,4,0,0">
+                            <Button Grid.Column="0" Text="Cotizar mi obra" Command="{Binding NavegarCommand}"
+                                    CommandParameter="CotizacionPage" Style="{StaticResource BotonPrimario}" />
+                            <Button Grid.Column="1" Text="Pedir información" Command="{Binding ContactarWhatsAppCommand}"
+                                    Style="{StaticResource BotonWhatsApp}" />
+                        </Grid>
                     </VerticalStackLayout>
-                </Grid>
-            </Border>
+                </Border>
+
+                <!-- OBRAS REALIZADAS (VISIBLES APENAS INICIA SESIÓN) -->
+                <VerticalStackLayout Spacing="12">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10">
+                        <VerticalStackLayout Spacing="2">
+                            <Label Text="PORTAFOLIO DE PROYECTOS" Style="{StaticResource SubtituloSeccion}" />
+                            <Label Text="Obras realizadas" Style="{StaticResource TituloSeccion}" FontSize="19" />
+                        </VerticalStackLayout>
+                        <Button Grid.Column="1" Text="Ver catálogo completo" Command="{Binding NavegarCommand}"
+                                CommandParameter="MainPage" Style="{StaticResource BotonPildoraSuave}" VerticalOptions="Center" />
+                    </Grid>
+
+                    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="{StaticResource Acento}" />
+
+                    <VerticalStackLayout Spacing="14" BindableLayout.ItemsSource="{Binding ObrasRealizadas}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="models:Proyecto">
+                                <Border Style="{StaticResource TarjetaMinimal}" Padding="0">
+                                    <VerticalStackLayout Spacing="0">
+                                        <Image Source="{Binding ImagenUrl}" Aspect="AspectFill" HeightRequest="185" />
+                                        <VerticalStackLayout Padding="16" Spacing="8">
+                                            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                                                <Border BackgroundColor="{StaticResource FondoTarjetaSuave}"
+                                                        Stroke="{StaticResource BrochaBorde}" StrokeThickness="1"
+                                                        StrokeShape="RoundRectangle 6" Padding="8,3" VerticalOptions="Center">
+                                                    <Label Text="{Binding Categoria}" FontSize="10" FontAttributes="Bold"
+                                                           TextColor="{StaticResource Acento}" />
+                                                </Border>
+                                                <Label Grid.Column="1" Text="{Binding BadgeTexto}" FontSize="11"
+                                                       TextColor="{StaticResource TextoSuave}" VerticalOptions="Center" />
+                                            </Grid>
+
+                                            <Label Text="{Binding Titulo}" FontSize="16" FontAttributes="Bold"
+                                                   TextColor="{StaticResource TextoClaro}" />
+                                            <Label Text="{Binding Ubicacion, StringFormat='Ubicación: {0}'}"
+                                                   FontSize="12" TextColor="{StaticResource Acento}" />
+                                            <Label Text="{Binding Descripcion}" Style="{StaticResource TextoDetalle}" FontSize="13" />
+
+                                            <Grid ColumnDefinitions="*,*" ColumnSpacing="8" Margin="0,6,0,0">
+                                                <Button Grid.Column="0" Text="Pedir información"
+                                                        Style="{StaticResource BotonPildoraAcento}"
+                                                        Command="{Binding Source={x:Reference Pagina}, Path=BindingContext.PedirInfoObraCommand, x:DataType={x:Null}}"
+                                                        CommandParameter="{Binding .}" />
+                                                <Button Grid.Column="1" Text="Cotizar similar"
+                                                        Style="{StaticResource BotonPildoraSuave}"
+                                                        Command="{Binding Source={x:Reference Pagina}, Path=BindingContext.NavegarCommand, x:DataType={x:Null}}"
+                                                        CommandParameter="CotizacionPage" />
+                                            </Grid>
+                                        </VerticalStackLayout>
+                                    </VerticalStackLayout>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                </VerticalStackLayout>
+
+                <!-- SERVICIOS DISPONIBLES -->
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="NUESTROS SERVICIOS" Style="{StaticResource SubtituloSeccion}" />
+                    <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+                        <Border Grid.Row="0" Grid.Column="0" Style="{StaticResource TarjetaMinimal}">
+                            <VerticalStackLayout Spacing="6">
+                                <Border Style="{StaticResource CajaIcono}" HorizontalOptions="Start" WidthRequest="38" HeightRequest="38">
+                                    <Path Data="M12,7 V3 H2 V21 H22 V7 H12 Z M6,19 H4 V17 H6 V19 Z M6,15 H4 V13 H6 V15 Z M6,11 H4 V9 H6 V11 Z M6,7 H4 V5 H6 V7 Z M20,19 H12 V17 H14 V15 H12 V13 H14 V11 H12 V9 H20 V19 Z"
+                                          Fill="{StaticResource Acento}" WidthRequest="18" HeightRequest="18" Aspect="Uniform" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="Edificación Civil" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextoClaro}" />
+                                <Label Text="Viviendas, condominios y locales comerciales llave en mano." Style="{StaticResource TextoDetalle}" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Row="0" Grid.Column="1" Style="{StaticResource TarjetaMinimal}">
+                            <VerticalStackLayout Spacing="6">
+                                <Border Style="{StaticResource CajaIcono}" HorizontalOptions="Start" WidthRequest="38" HeightRequest="38">
+                                    <Path Data="M22.7,19 L13.6,9.9 C14.5,7.6 14,4.9 12.1,3 C10.1,1 7.1,0.6 4.7,1.7 L9,6 L6,9 L1.6,4.7 C0.4,7.1 0.9,10.1 2.9,12.1 C4.8,14 7.5,14.5 9.8,13.6 L18.9,22.7 C19.3,23.1 19.9,23.1 20.3,22.7 L22.6,20.4 C23.1,20 23.1,19.3 22.7,19 Z"
+                                          Fill="{StaticResource Acento}" WidthRequest="18" HeightRequest="18" Aspect="Uniform" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="Obra Gruesa" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextoClaro}" />
+                                <Label Text="Fundaciones, hormigón armado, columnas y losas." Style="{StaticResource TextoDetalle}" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="0" Style="{StaticResource TarjetaMinimal}">
+                            <VerticalStackLayout Spacing="6">
+                                <Border Style="{StaticResource CajaIcono}" HorizontalOptions="Start" WidthRequest="38" HeightRequest="38">
+                                    <Path Data="M7,14 C5.34,14 4,15.34 4,17 C4,18.31 2.84,19 2,19 C2.92,20.22 4.49,21 6,21 C8.21,21 10,19.21 10,17 C10,15.34 8.66,14 7,14 Z M20.71,4.63 L19.37,3.29 C18.98,2.9 18.35,2.9 17.96,3.29 L9,12.25 L11.75,15 L20.71,6.04 C21.1,5.65 21.1,5.02 20.71,4.63 Z"
+                                          Fill="{StaticResource Acento}" WidthRequest="18" HeightRequest="18" Aspect="Uniform" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="Remodelaciones" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextoClaro}" />
+                                <Label Text="Fachadas, pisos de porcelanato, cielos falsos y acabados." Style="{StaticResource TextoDetalle}" />
+                            </VerticalStackLayout>
+                        </Border>
+                        <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource TarjetaMinimal}">
+                            <VerticalStackLayout Spacing="6">
+                                <Border Style="{StaticResource CajaIcono}" HorizontalOptions="Start" WidthRequest="38" HeightRequest="38">
+                                    <Path Data="M3,17.25 V21 H6.75 L17.81,9.94 L14.06,6.19 L3,17.25 Z M20.71,7.04 C21.1,6.65 21.1,6.02 20.71,5.63 L18.37,3.29 C17.98,2.9 17.35,2.9 16.96,3.29 L15.13,5.12 L18.88,8.87 L20.71,7.04 Z"
+                                          Fill="{StaticResource Acento}" WidthRequest="18" HeightRequest="18" Aspect="Uniform" HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                                <Label Text="Planos y Asesoría" FontSize="14" FontAttributes="Bold" TextColor="{StaticResource TextoClaro}" />
+                                <Label Text="Cómputos métricos, presupuestos y dirección técnica." Style="{StaticResource TextoDetalle}" />
+                            </VerticalStackLayout>
+                        </Border>
+                    </Grid>
+                </VerticalStackLayout>
+
+                <!-- CONTACTO DIRECTO -->
+                <Border Style="{StaticResource TarjetaMinimal}" Padding="16">
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <VerticalStackLayout Spacing="2" VerticalOptions="Center">
+                            <Label Text="Atención directa al cliente" Style="{StaticResource TextoItem}" FontSize="14" />
+                            <Label Text="Construcciones Durán • Cel: 77661522 • Santa Cruz" Style="{StaticResource TextoDetalle}" />
+                        </VerticalStackLayout>
+                        <Button Grid.Column="1" Text="WhatsApp" Command="{Binding ContactarWhatsAppCommand}"
+                                Style="{StaticResource BotonWhatsApp}" HeightRequest="40" MinimumHeightRequest="40"
+                                VerticalOptions="Center" />
+                    </Grid>
+                </Border>
+
+            </VerticalStackLayout>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
-

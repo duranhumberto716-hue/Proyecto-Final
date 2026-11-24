@@ -3,33 +3,107 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
 
-    <!-- Paleta corporativa de Construcciones Durán -->
-    <Color x:Key="FondoApp">#07122A</Color>
-    <Color x:Key="FondoTarjeta">#0B1B3D</Color>
-    <Color x:Key="FondoCampo">#10244D</Color>
-    <Color x:Key="BordeTarjeta">#1E3A6E</Color>
+    <!-- Paleta corporativa minimalista unificada de Construcciones Durán -->
+    <Color x:Key="FondoApp">#060F24</Color>
+    <Color x:Key="FondoTarjeta">#0B1936</Color>
+    <Color x:Key="FondoTarjetaSuave">#0E2044</Color>
+    <Color x:Key="FondoFilaAlterna">#10234A</Color>
+    <Color x:Key="FondoEncabezadoTabla">#132954</Color>
+    <Color x:Key="FondoCampo">#0D1F42</Color>
+    <Color x:Key="BordeTarjeta">#1B3566</Color>
     <Color x:Key="Acento">#FFDE00</Color>
-    <Color x:Key="TextoClaro">#FFFFFF</Color>
+    <Color x:Key="TextoClaro">#F8FAFC</Color>
     <Color x:Key="TextoSuave">#CBD5E1</Color>
     <Color x:Key="TextoSecundario">#94A3B8</Color>
-    <Color x:Key="Peligro">#B91C1C</Color>
+    <Color x:Key="Peligro">#DC2626</Color>
+    <Color x:Key="Exito">#16A34A</Color>
+    <Color x:Key="WhatsAppVerde">#25D366</Color>
+    <Color x:Key="InfoAzul">#2563EB</Color>
+    <Color x:Key="Alerta">#F59E0B</Color>
 
+    <!-- Brochas para propiedades Brush (Border.Stroke) -->
+    <SolidColorBrush x:Key="BrochaBorde" Color="#1B3566" />
+    <SolidColorBrush x:Key="BrochaBordeSuave" Color="#162C56" />
+    <SolidColorBrush x:Key="BrochaAcento" Color="#FFDE00" />
+    <SolidColorBrush x:Key="BrochaAlerta" Color="#F59E0B" />
+    <SolidColorBrush x:Key="BrochaExito" Color="#16A34A" />
+    <SolidColorBrush x:Key="BrochaPeligro" Color="#DC2626" />
+
+    <!-- Tarjetas y contenedores -->
     <Style x:Key="Tarjeta" TargetType="Border">
-        <Setter Property="StrokeShape" Value="RoundRectangle 18" />
-        <Setter Property="Stroke" Value="{StaticResource BordeTarjeta}" />
+        <Setter Property="StrokeShape" Value="RoundRectangle 16" />
+        <Setter Property="Stroke" Value="{StaticResource BrochaBorde}" />
         <Setter Property="StrokeThickness" Value="1" />
         <Setter Property="BackgroundColor" Value="{StaticResource FondoTarjeta}" />
-        <Setter Property="Padding" Value="16" />
+        <Setter Property="Padding" Value="18" />
+    </Style>
+
+    <Style x:Key="TarjetaMinimal" TargetType="Border">
+        <Setter Property="StrokeShape" Value="RoundRectangle 14" />
+        <Setter Property="Stroke" Value="{StaticResource BrochaBordeSuave}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="BackgroundColor" Value="{StaticResource FondoTarjeta}" />
+        <Setter Property="Padding" Value="14" />
+    </Style>
+
+    <Style x:Key="CajaCampo" TargetType="Border">
+        <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+        <Setter Property="Stroke" Value="{StaticResource BrochaBorde}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="BackgroundColor" Value="{StaticResource FondoCampo}" />
+        <Setter Property="Padding" Value="12,0" />
+        <Setter Property="MinimumHeightRequest" Value="44" />
+    </Style>
+
+    <Style x:Key="CajaEditor" TargetType="Border">
+        <Setter Property="StrokeShape" Value="RoundRectangle 10" />
+        <Setter Property="Stroke" Value="{StaticResource BrochaBorde}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="BackgroundColor" Value="{StaticResource FondoCampo}" />
+        <Setter Property="Padding" Value="12,8" />
+    </Style>
+
+    <Style x:Key="ContenedorTabla" TargetType="Border">
+        <Setter Property="StrokeShape" Value="RoundRectangle 14" />
+        <Setter Property="Stroke" Value="{StaticResource BrochaBorde}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="BackgroundColor" Value="{StaticResource FondoTarjeta}" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+
+    <Style x:Key="CajaIcono" TargetType="Border">
+        <Setter Property="StrokeShape" Value="RoundRectangle 11" />
+        <Setter Property="StrokeThickness" Value="0" />
+        <Setter Property="BackgroundColor" Value="{StaticResource FondoTarjetaSuave}" />
+        <Setter Property="WidthRequest" Value="42" />
+        <Setter Property="HeightRequest" Value="42" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Tipografía unificada -->
+    <Style x:Key="TituloPagina" TargetType="Label">
+        <Setter Property="FontSize" Value="22" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
     </Style>
 
     <Style x:Key="TituloSeccion" TargetType="Label">
-        <Setter Property="FontSize" Value="18" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
+    </Style>
+
+    <Style x:Key="SubtituloSeccion" TargetType="Label">
+        <Setter Property="FontSize" Value="11" />
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="TextColor" Value="{StaticResource Acento}" />
+        <Setter Property="CharacterSpacing" Value="1" />
     </Style>
 
     <Style x:Key="Etiqueta" TargetType="Label">
         <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="TextColor" Value="{StaticResource TextoSuave}" />
     </Style>
 
@@ -44,73 +118,204 @@
         <Setter Property="TextColor" Value="{StaticResource TextoSecundario}" />
     </Style>
 
-    <Style x:Key="Campo" TargetType="Entry">
+    <!-- Tabla CRUD -->
+    <Style x:Key="EncabezadoTabla" TargetType="Label">
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource Acento}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="CeldaId" TargetType="Label">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource Acento}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <Style x:Key="CeldaTexto" TargetType="Label">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="LineBreakMode" Value="TailTruncation" />
+    </Style>
+
+    <Style x:Key="CeldaSecundaria" TargetType="Label">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{StaticResource TextoSuave}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="LineBreakMode" Value="TailTruncation" />
+    </Style>
+
+    <!-- Campos de formulario unificados (siempre dentro de CajaCampo / CajaEditor) -->
+    <Style x:Key="CampoSinFondo" TargetType="Entry">
         <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
         <Setter Property="PlaceholderColor" Value="#64748B" />
-        <Setter Property="BackgroundColor" Value="{StaticResource FondoCampo}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MinimumHeightRequest" Value="42" />
     </Style>
 
-    <Style x:Key="Selector" TargetType="Picker">
+    <Style x:Key="SelectorSinFondo" TargetType="Picker">
         <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
         <Setter Property="TitleColor" Value="#64748B" />
-        <Setter Property="BackgroundColor" Value="{StaticResource FondoCampo}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MinimumHeightRequest" Value="42" />
     </Style>
 
-    <Style x:Key="SelectorFecha" TargetType="DatePicker">
+    <Style x:Key="SelectorFechaSinFondo" TargetType="DatePicker">
         <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
-        <Setter Property="BackgroundColor" Value="{StaticResource FondoCampo}" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Format" Value="dd/MM/yyyy" />
-        <Setter Property="MinimumHeightRequest" Value="44" />
+        <Setter Property="MinimumHeightRequest" Value="42" />
     </Style>
 
+    <Style x:Key="EditorSinFondo" TargetType="Editor">
+        <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
+        <Setter Property="PlaceholderColor" Value="#64748B" />
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+
+    <!-- Botones unificados -->
     <Style x:Key="BotonPrimario" TargetType="Button">
         <Setter Property="BackgroundColor" Value="{StaticResource Acento}" />
         <Setter Property="TextColor" Value="{StaticResource FondoApp}" />
         <Setter Property="FontAttributes" Value="Bold" />
-        <Setter Property="FontSize" Value="15" />
-        <Setter Property="CornerRadius" Value="12" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="HeightRequest" Value="46" />
         <Setter Property="MinimumHeightRequest" Value="46" />
+        <Setter Property="Padding" Value="16,0" />
     </Style>
 
     <Style x:Key="BotonSecundario" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="{StaticResource BordeTarjeta}" />
+        <Setter Property="BackgroundColor" Value="{StaticResource FondoTarjetaSuave}" />
+        <Setter Property="BorderColor" Value="{StaticResource BordeTarjeta}" />
+        <Setter Property="BorderWidth" Value="1" />
         <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
         <Setter Property="FontAttributes" Value="Bold" />
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="CornerRadius" Value="12" />
-        <Setter Property="MinimumHeightRequest" Value="46" />
-    </Style>
-
-    <Style x:Key="BotonIcono" TargetType="Button">
-        <Setter Property="BackgroundColor" Value="{StaticResource BordeTarjeta}" />
-        <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
-        <Setter Property="FontSize" Value="16" />
         <Setter Property="CornerRadius" Value="10" />
-        <Setter Property="WidthRequest" Value="46" />
-        <Setter Property="HeightRequest" Value="42" />
-        <Setter Property="Padding" Value="0" />
+        <Setter Property="HeightRequest" Value="46" />
+        <Setter Property="MinimumHeightRequest" Value="46" />
+        <Setter Property="Padding" Value="16,0" />
     </Style>
 
-    <Style x:Key="BuscadorEstilo" TargetType="SearchBar">
+    <Style x:Key="BotonWhatsApp" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource WhatsAppVerde}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="CornerRadius" Value="10" />
+        <Setter Property="HeightRequest" Value="46" />
+        <Setter Property="MinimumHeightRequest" Value="46" />
+        <Setter Property="Padding" Value="16,0" />
+    </Style>
+
+    <Style x:Key="BotonAccion" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource FondoTarjetaSuave}" />
+        <Setter Property="BorderColor" Value="{StaticResource BordeTarjeta}" />
+        <Setter Property="BorderWidth" Value="1" />
         <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
-        <Setter Property="PlaceholderColor" Value="#64748B" />
-        <Setter Property="CancelButtonColor" Value="{StaticResource Acento}" />
-        <Setter Property="BackgroundColor" Value="{StaticResource FondoCampo}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="HeightRequest" Value="36" />
+        <Setter Property="MinimumHeightRequest" Value="36" />
+        <Setter Property="Padding" Value="14,0" />
     </Style>
 
-    <!-- Tarjeta del menú principal -->
-    <Style x:Key="TarjetaMenu" TargetType="Border">
-        <Setter Property="StrokeShape" Value="RoundRectangle 18" />
-        <Setter Property="Stroke" Value="{StaticResource BordeTarjeta}" />
-        <Setter Property="StrokeThickness" Value="1" />
+    <Style x:Key="BotonPildoraAcento" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource Acento}" />
+        <Setter Property="TextColor" Value="{StaticResource FondoApp}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="HeightRequest" Value="34" />
+        <Setter Property="MinimumHeightRequest" Value="34" />
+        <Setter Property="Padding" Value="12,0" />
+    </Style>
+
+    <Style x:Key="BotonPildoraSuave" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource FondoTarjetaSuave}" />
+        <Setter Property="BorderColor" Value="{StaticResource BordeTarjeta}" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="TextColor" Value="{StaticResource TextoSuave}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="HeightRequest" Value="34" />
+        <Setter Property="MinimumHeightRequest" Value="34" />
+        <Setter Property="Padding" Value="12,0" />
+    </Style>
+
+    <Style x:Key="BotonChip" TargetType="Button">
         <Setter Property="BackgroundColor" Value="{StaticResource FondoTarjeta}" />
-        <Setter Property="Padding" Value="12,16" />
-        <Setter Property="MinimumHeightRequest" Value="118" />
+        <Setter Property="BorderColor" Value="{StaticResource BordeTarjeta}" />
+        <Setter Property="BorderWidth" Value="1" />
+        <Setter Property="TextColor" Value="{StaticResource TextoSuave}" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="CornerRadius" Value="16" />
+        <Setter Property="HeightRequest" Value="34" />
+        <Setter Property="MinimumHeightRequest" Value="34" />
+        <Setter Property="Padding" Value="12,0" />
+    </Style>
+
+    <!-- Botones estilo tabla CRUD -->
+    <Style x:Key="BotonEditarTabla" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="#F5B800" />
+        <Setter Property="TextColor" Value="{StaticResource FondoApp}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="HeightRequest" Value="32" />
+        <Setter Property="MinimumHeightRequest" Value="32" />
+        <Setter Property="Padding" Value="12,0" />
+    </Style>
+
+    <Style x:Key="BotonEliminarTabla" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource Peligro}" />
+        <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="CornerRadius" Value="6" />
+        <Setter Property="HeightRequest" Value="32" />
+        <Setter Property="MinimumHeightRequest" Value="32" />
+        <Setter Property="Padding" Value="12,0" />
+    </Style>
+
+    <Style x:Key="BotonCsv" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource InfoAzul}" />
+        <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="MinimumHeightRequest" Value="40" />
+        <Setter Property="Padding" Value="16,0" />
+    </Style>
+
+    <Style x:Key="BotonAgregar" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource Exito}" />
+        <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="HeightRequest" Value="40" />
+        <Setter Property="MinimumHeightRequest" Value="40" />
+        <Setter Property="Padding" Value="16,0" />
+    </Style>
+
+    <Style x:Key="BotonEliminar" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource Peligro}" />
+        <Setter Property="TextColor" Value="{StaticResource TextoClaro}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="HeightRequest" Value="36" />
+        <Setter Property="Padding" Value="12,0" />
     </Style>
 </ResourceDictionary>
-

@@ -4,171 +4,103 @@
              xmlns:vm="clr-namespace:Proyecto_Final.ViewModels"
              x:Class="Proyecto_Final.CotizacionPage"
              x:DataType="vm:CotizacionViewModel"
-             BackgroundColor="#07122A"
-             Shell.NavBarIsVisible="False">
+             Title="Cotizar obra"
+             BackgroundColor="{StaticResource FondoApp}">
 
     <Grid>
         <ScrollView>
-            <VerticalStackLayout Spacing="20" Padding="16,20,16,40">
+            <VerticalStackLayout Spacing="18" Padding="20,20,20,36" MaximumWidthRequest="680">
 
-                <!-- 1. BARRA SUPERIOR CON BOTÓN VOLVER Y TÍTULO -->
-                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" VerticalOptions="Center">
-                    <Button Grid.Column="0"
-                            Text="⬅ Volver"
-                            Command="{Binding VolverCommand}"
-                            BackgroundColor="#1E3A6E"
-                            TextColor="#FFFFFF"
-                            FontAttributes="Bold"
-                            FontSize="13"
-                            CornerRadius="12"
-                            HeightRequest="42"
-                            Padding="14,0" />
+                <!-- ENCABEZADO MINIMALISTA -->
+                <VerticalStackLayout Spacing="3">
+                    <Label Text="COTIZADOR DE OBRAS" Style="{StaticResource SubtituloSeccion}" />
+                    <Label Text="Solicitud de presupuesto" Style="{StaticResource TituloPagina}" />
+                    <Label Text="Completa los datos de tu proyecto para calcular un estimado en USD y enviarlo por WhatsApp."
+                           Style="{StaticResource TextoDetalle}" />
+                </VerticalStackLayout>
 
-                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center">
-                        <Label Text="COTIZADOR DE OBRAS"
-                               FontSize="17"
-                               FontAttributes="Bold"
-                               TextColor="#FFDE00" />
-                        <Label Text="Construcciones Durán • Cel: 77661522"
-                               FontSize="11"
-                               TextColor="#94A3B8" />
-                    </VerticalStackLayout>
-                </Grid>
-
-                <!-- 2. FORMULARIO PRINCIPAL DE COTIZACIÓN -->
-                <Border StrokeShape="RoundRectangle 22"
-                        Stroke="#FFDE00"
-                        StrokeThickness="1.5"
-                        BackgroundColor="#0B1B3D"
-                        Padding="20">
-                    <Border.Shadow>
-                        <Shadow Brush="Black" Offset="0,6" Radius="10" Opacity="0.35" />
-                    </Border.Shadow>
-
+                <!-- FORMULARIO UNIFICADO -->
+                <Border Style="{StaticResource Tarjeta}" Padding="20">
                     <VerticalStackLayout Spacing="14">
 
-                        <HorizontalStackLayout Spacing="8">
-                            <Label Text="📋" FontSize="24" VerticalOptions="Center" />
-                            <VerticalStackLayout>
-                                <Label Text="Solicitud de Presupuesto"
-                                       FontSize="18"
-                                       FontAttributes="Bold"
-                                       TextColor="#FFFFFF" />
-                                <Label Text="Completa los datos para calcular un estimado"
-                                       FontSize="11"
-                                       TextColor="#CBD5E1" />
+                        <!-- Nombre y Teléfono -->
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="12">
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="Nombre completo *" Style="{StaticResource Etiqueta}" />
+                                <Border Style="{StaticResource CajaCampo}">
+                                    <Entry Text="{Binding Nombre}" Placeholder="Ej: Carlos Mendoza"
+                                           Style="{StaticResource CampoSinFondo}" />
+                                </Border>
                             </VerticalStackLayout>
-                        </HorizontalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                <Label Text="Teléfono (opcional)" Style="{StaticResource Etiqueta}" />
+                                <Border Style="{StaticResource CajaCampo}">
+                                    <Entry Text="{Binding Telefono}" Keyboard="Telephone" MaxLength="8"
+                                           Placeholder="Ej: 77661522" Style="{StaticResource CampoSinFondo}" />
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
 
-                        <BoxView HeightRequest="1" Color="#1E3A6E" />
-
-                        <!-- Nombre -->
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="Nombre completo del cliente *" FontSize="12" FontAttributes="Bold" TextColor="#FFFFFF" />
-                            <Border StrokeShape="RoundRectangle 10" Stroke="#2D4A7D" BackgroundColor="#07122A" Padding="12,2">
-                                <Entry Text="{Binding Nombre}"
-                                       Placeholder="Ej. Arq. Carlos Mendoza"
-                                       PlaceholderColor="#64748B"
-                                       TextColor="#FFFFFF" />
-                            </Border>
-                        </VerticalStackLayout>
-
-                        <!-- Teléfono -->
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="Teléfono de contacto (Opcional)" FontSize="12" FontAttributes="Bold" TextColor="#FFFFFF" />
-                            <Border StrokeShape="RoundRectangle 10" Stroke="#2D4A7D" BackgroundColor="#07122A" Padding="12,2">
-                                <Entry Text="{Binding Telefono}"
-                                       Keyboard="Telephone"
-                                       Placeholder="Ej. 77661522"
-                                       PlaceholderColor="#64748B"
-                                       TextColor="#FFFFFF" />
-                            </Border>
-                        </VerticalStackLayout>
-
-                        <!-- Tipo de Proyecto -->
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="Tipo de obra o proyecto *" FontSize="12" FontAttributes="Bold" TextColor="#FFFFFF" />
-                            <Border StrokeShape="RoundRectangle 10" Stroke="#2D4A7D" BackgroundColor="#07122A" Padding="12,0">
-                                <Picker ItemsSource="{Binding TiposProyecto}"
-                                        SelectedItem="{Binding TipoProyectoSeleccionado}"
-                                        Title="Selecciona el tipo de trabajo"
-                                        TitleColor="#64748B"
-                                        TextColor="#FFFFFF" />
-                            </Border>
-                        </VerticalStackLayout>
-
-                        <!-- Metros cuadrados m² -->
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="Área aproximada en m² *" FontSize="12" FontAttributes="Bold" TextColor="#FFFFFF" />
-                            <Border StrokeShape="RoundRectangle 10" Stroke="#2D4A7D" BackgroundColor="#07122A" Padding="12,2">
-                                <Entry Text="{Binding MetrosCuadradosTexto}"
-                                       Keyboard="Numeric"
-                                       Placeholder="Ej. 180"
-                                       PlaceholderColor="#64748B"
-                                       TextColor="#FFFFFF" />
-                            </Border>
-                        </VerticalStackLayout>
+                        <!-- Tipo de Proyecto y Área -->
+                        <Grid ColumnDefinitions="2*,*" ColumnSpacing="12">
+                            <VerticalStackLayout Spacing="6">
+                                <Label Text="Tipo de obra *" Style="{StaticResource Etiqueta}" />
+                                <Border Style="{StaticResource CajaCampo}">
+                                    <Picker ItemsSource="{Binding TiposProyecto}"
+                                            SelectedItem="{Binding TipoProyectoSeleccionado}"
+                                            Title="Selecciona el tipo de trabajo"
+                                            Style="{StaticResource SelectorSinFondo}" />
+                                </Border>
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                <Label Text="Área (m²) *" Style="{StaticResource Etiqueta}" />
+                                <Border Style="{StaticResource CajaCampo}">
+                                    <Entry Text="{Binding MetrosCuadradosTexto}" Keyboard="Numeric"
+                                           Placeholder="Ej: 180" Style="{StaticResource CampoSinFondo}" />
+                                </Border>
+                            </VerticalStackLayout>
+                        </Grid>
 
                         <!-- Ubicación -->
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="Ubicación o zona de la obra *" FontSize="12" FontAttributes="Bold" TextColor="#FFFFFF" />
-                            <Border StrokeShape="RoundRectangle 10" Stroke="#2D4A7D" BackgroundColor="#07122A" Padding="12,2">
-                                <Entry Text="{Binding Ubicacion}"
-                                       Placeholder="Ej. Santa Cruz, Barrio Equipetrol"
-                                       PlaceholderColor="#64748B"
-                                       TextColor="#FFFFFF" />
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Ubicación o zona de la obra *" Style="{StaticResource Etiqueta}" />
+                            <Border Style="{StaticResource CajaCampo}">
+                                <Entry Text="{Binding Ubicacion}" Placeholder="Ej: Santa Cruz, Barrio Equipetrol"
+                                       Style="{StaticResource CampoSinFondo}" />
                             </Border>
                         </VerticalStackLayout>
 
-                        <!-- Detalles / Observaciones -->
-                        <VerticalStackLayout Spacing="4">
-                            <Label Text="Detalles del proyecto o requerimientos especiales" FontSize="12" FontAttributes="Bold" TextColor="#FFFFFF" />
-                            <Border StrokeShape="RoundRectangle 10" Stroke="#2D4A7D" BackgroundColor="#07122A" Padding="12,8">
-                                <Editor Text="{Binding Descripcion}"
-                                        HeightRequest="85"
-                                        Placeholder="Describe ideas, planos aprobados, materiales de preferencia, fecha tentativa, etc."
-                                        PlaceholderColor="#64748B"
-                                        TextColor="#FFFFFF"
-                                        AutoSize="Disabled" />
+                        <!-- Detalles -->
+                        <VerticalStackLayout Spacing="6">
+                            <Label Text="Detalles y requerimientos especiales" Style="{StaticResource Etiqueta}" />
+                            <Border Style="{StaticResource CajaEditor}">
+                                <Editor Text="{Binding Descripcion}" HeightRequest="84" AutoSize="Disabled"
+                                        Placeholder="Planos aprobados, materiales de preferencia, fecha tentativa..."
+                                        Style="{StaticResource EditorSinFondo}" />
                             </Border>
                         </VerticalStackLayout>
 
-                        <!-- Caja de Estimado Referencial Dinámico -->
-                        <Border StrokeShape="RoundRectangle 14"
-                                Stroke="#FFDE00"
-                                StrokeDashArray="4,2"
-                                BackgroundColor="#06142E"
-                                Padding="16">
+                        <!-- Estimado Referencial -->
+                        <Border Style="{StaticResource TarjetaMinimal}" Stroke="{StaticResource BrochaAcento}"
+                                BackgroundColor="{StaticResource FondoApp}" Padding="16">
                             <VerticalStackLayout Spacing="4">
-                                <Label Text="PRESUPUESTO ESTIMADO REFERENCIAL:"
-                                       FontSize="11"
-                                       FontAttributes="Bold"
-                                       TextColor="#FFDE00" />
-                                <Label Text="{Binding EstimadoReferencialFormateado}"
-                                       FontSize="18"
-                                       FontAttributes="Bold"
-                                       TextColor="#FFFFFF" />
-                                <Label Text="* Monto promedio preliminar en USD. El presupuesto final oficial se define tras inspección en terreno."
-                                       FontSize="10"
-                                       TextColor="#94A3B8" />
+                                <Label Text="PRESUPUESTO ESTIMADO REFERENCIAL" Style="{StaticResource SubtituloSeccion}" />
+                                <Label Text="{Binding EstimadoReferencialFormateado}" FontSize="20" FontAttributes="Bold"
+                                       TextColor="{StaticResource TextoClaro}" />
+                                <Label Text="Monto promedio preliminar en USD. El presupuesto final se define tras inspección técnica."
+                                       Style="{StaticResource TextoDetalle}" FontSize="11" />
                             </VerticalStackLayout>
                         </Border>
 
-                        <!-- Botón de Envío por WhatsApp -->
-                        <Button Text="📲 Enviar Cotización por WhatsApp"
-                                Command="{Binding EnviarCotizacionCommand}"
-                                BackgroundColor="#25D366"
-                                TextColor="#FFFFFF"
-                                FontAttributes="Bold"
-                                FontSize="15"
-                                CornerRadius="12"
-                                HeightRequest="52"
-                                Margin="0,8,0,0" />
-
-                        <Label Text="Se abrirá WhatsApp prellenando el mensaje con todos tus datos estructurados para el contratista."
-                               FontSize="11"
-                               TextColor="#94A3B8"
-                               HorizontalTextAlignment="Center" />
+                        <!-- Acciones -->
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10" Margin="0,4,0,0">
+                            <Button Grid.Column="0" Text="Enviar por WhatsApp"
+                                    Command="{Binding EnviarCotizacionCommand}"
+                                    Style="{StaticResource BotonWhatsApp}" />
+                            <Button Grid.Column="1" Text="Volver"
+                                    Command="{Binding VolverCommand}"
+                                    Style="{StaticResource BotonSecundario}" />
+                        </Grid>
 
                     </VerticalStackLayout>
                 </Border>
@@ -176,16 +108,11 @@
             </VerticalStackLayout>
         </ScrollView>
 
-        <!-- Indicador de Carga -->
-        <Grid BackgroundColor="#9907122A"
-              IsVisible="{Binding IsBusy}"
-              InputTransparent="False">
-            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="12">
-                <ActivityIndicator IsRunning="{Binding IsBusy}" Color="#FFDE00" />
-                <Label Text="Conectando con WhatsApp..." TextColor="#FFFFFF" FontSize="13" />
+        <Grid BackgroundColor="#99060F24" IsVisible="{Binding IsBusy}" InputTransparent="False">
+            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                <ActivityIndicator IsRunning="{Binding IsBusy}" Color="{StaticResource Acento}" />
+                <Label Text="Conectando con WhatsApp..." Style="{StaticResource TextoDetalle}" TextColor="{StaticResource TextoClaro}" />
             </VerticalStackLayout>
         </Grid>
     </Grid>
-
 </ContentPage>
-

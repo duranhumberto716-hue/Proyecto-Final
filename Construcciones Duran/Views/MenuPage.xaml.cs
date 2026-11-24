@@ -12,10 +12,9 @@ public partial class MenuPage : ContentPage
         BindingContext = _viewModel = viewModel;
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
-        _viewModel.Refrescar();
+        await _viewModel.RefrescarAsync();
     }
 }
-

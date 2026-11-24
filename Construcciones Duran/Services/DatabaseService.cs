@@ -34,10 +34,10 @@ public class DatabaseService
             {
                 var conexion = new SQLiteAsyncConnection(RutaBaseDatos, Flags);
                 await conexion.CreateTableAsync<Usuario>();
-                await conexion.CreateTableAsync<Cliente>();
-                await conexion.CreateTableAsync<Material>();
+                await conexion.CreateTableAsync<Obra>();
                 await conexion.CreateTableAsync<Empleado>();
-                await conexion.CreateTableAsync<Proveedor>();
+                await conexion.CreateTableAsync<Material>();
+                await conexion.CreateTableAsync<Avance>();
                 await SembrarDatosAsync(conexion);
                 _conexion = conexion;
             }
@@ -100,7 +100,7 @@ public class DatabaseService
             NombreCompleto = nombreCompleto.Trim(),
             NombreUsuario = usuario.Trim().ToLowerInvariant(),
             PasswordHash = Seguridad.HashPassword(password),
-            Rol = "Usuario"
+            Rol = Roles.Cliente
         });
     }
 
@@ -108,24 +108,65 @@ public class DatabaseService
 
     private static async Task SembrarDatosAsync(SQLiteAsyncConnection db)
     {
-        if (await db.Table<Usuario>().CountAsync() == 0)
-        {
-            await db.InsertAsync(new Usuario
-            {
-                NombreUsuario = "admin",
-                NombreCompleto = "Administrador Construcciones Durán",
-                PasswordHash = Seguridad.HashPassword("admin123"),
-                Rol = "Administrador"
-            });
-        }
+        await AsegurarUsuarioAsync(db, "admin", "Administrador Construcciones Durán", "admin123", Roles.Administrador);
+        await AsegurarUsuarioAsync(db, "trabajador", "Luis Gutiérrez (Obra)", "trab123", Roles.Trabajador);
+        await AsegurarUsuarioAsync(db, "cliente", "María Rojas (Cliente)", "cli123", Roles.Cliente);
 
-        if (await db.Table<Cliente>().CountAsync() == 0)
+        if (await db.Table<Obra>().CountAsync() == 0)
         {
             await db.InsertAllAsync(new[]
             {
-                new Cliente { Nombre = "María Fernanda Rojas", Ci = "6543210", Telefono = "71234567", Correo = "maria.rojas@gmail.com", Direccion = "Barrio Equipetrol, Calle 4 #120", FechaRegistro = DateTime.Now.AddDays(-40) },
-                new Cliente { Nombre = "Jorge Antonio Suárez", Ci = "7894561", Telefono = "76543210", Correo = "", Direccion = "Av. Banzer 6to anillo", FechaRegistro = DateTime.Now.AddDays(-12) },
-                new Cliente { Nombre = "Inmobiliaria Los Ceibos S.R.L.", Ci = "1029384", Telefono = "33445566", Correo = "contacto@losceibos.bo", Direccion = "Urb. Los Ceibos, Mz 12", FechaRegistro = DateTime.Now.AddDays(-3) }
+                new Obra
+                {
+                    Nombre = "Residencia Moderna Las Palmas",
+                    Cliente = "María Fernanda Rojas",
+                    Ubicacion = "Zona Norte - Residencial Las Palmas",
+                    TipoObra = "Construcción residencial",
+                    Presupuesto = 680000,
+                    FechaInicio = DateTime.Today.AddDays(-90),
+                    Estado = "En ejecución"
+                },
+                new Obra
+                {
+                    Nombre = "Edificio Corporativo Alianza",
+                    Cliente = "Inmobiliaria Los Ceibos S.R.L.",
+                    Ubicacion = "Av. Empresarial #450",
+                    TipoObra = "Obra comercial",
+                    Presupuesto = 1450000,
+                    FechaInicio = DateTime.Today.AddDays(-180),
+                    Estado = "En ejecución"
+                },
+                new Obra
+                {
+                    Nombre = "Remodelación Penthouse Mirador",
+                    Cliente = "Jorge Antonio Suárez",
+                    Ubicacion = "Condominio Mirador Real",
+                    TipoObra = "Remodelación integral",
+                    Presupuesto = 240000,
+                    FechaInicio = DateTime.Today.AddDays(-120),
+                    Estado = "Finalizada"
+                },
+                new Obra
+                {
+                    Nombre = "Nave Industrial Sector B",
+                    Cliente = "Logística Oriente Ltda.",
+                    Ubicacion = "Parque Industrial Sector B",
+                    TipoObra = "Obra gruesa",
+                    Presupuesto = 920000,
+                    FechaInicio = DateTime.Today.AddDays(-15),
+                    Estado = "Planificación"
+                }
+            });
+        }
+
+        if (await db.Table<Empleado>().CountAsync() == 0)
+        {
+            await db.InsertAllAsync(new[]
+            {
+                new Empleado { NombreCompleto = "Carlos Durán Méndez", Ci = "4567891", Cargo = "Ingeniero civil", Telefono = "77661522", SalarioMensual = 9500, FechaIngreso = new DateTime(2018, 3, 1), Activo = true },
+                new Empleado { NombreCompleto = "Luis Fernando Gutiérrez", Ci = "5678912", Cargo = "Maestro de obra", Telefono = "70011223", SalarioMensual = 6000, FechaIngreso = new DateTime(2020, 6, 15), Activo = true },
+                new Empleado { NombreCompleto = "Pedro Vaca Justiniano", Ci = "6789123", Cargo = "Albañil", Telefono = "75544332", SalarioMensual = 4200, FechaIngreso = new DateTime(2022, 1, 10), Activo = true },
+                new Empleado { NombreCompleto = "Ana Lucía Pérez", Ci = "8912345", Cargo = "Administración", Telefono = "72233445", SalarioMensual = 5000, FechaIngreso = new DateTime(2021, 9, 1), Activo = false }
             });
         }
 
@@ -141,26 +182,62 @@ public class DatabaseService
             });
         }
 
-        if (await db.Table<Empleado>().CountAsync() == 0)
+        if (await db.Table<Avance>().CountAsync() == 0)
         {
             await db.InsertAllAsync(new[]
             {
-                new Empleado { NombreCompleto = "Carlos Durán Méndez", Ci = "4567891", Cargo = "Ingeniero civil", Telefono = "77661522", SalarioMensual = 9500, FechaIngreso = new DateTime(2018, 3, 1), Activo = true },
-                new Empleado { NombreCompleto = "Luis Fernando Gutiérrez", Ci = "5678912", Cargo = "Maestro de obra", Telefono = "70011223", SalarioMensual = 6000, FechaIngreso = new DateTime(2020, 6, 15), Activo = true },
-                new Empleado { NombreCompleto = "Pedro Vaca Justiniano", Ci = "6789123", Cargo = "Albañil", Telefono = "75544332", SalarioMensual = 4200, FechaIngreso = new DateTime(2022, 1, 10), Activo = true },
-                new Empleado { NombreCompleto = "Ana Lucía Pérez", Ci = "8912345", Cargo = "Administración", Telefono = "72233445", SalarioMensual = 5000, FechaIngreso = new DateTime(2021, 9, 1), Activo = false }
+                new Avance
+                {
+                    NombreObra = "Residencia Moderna Las Palmas",
+                    Etapa = "Obra gruesa / Estructura",
+                    Porcentaje = 65,
+                    Responsable = "Carlos Durán Méndez",
+                    Fecha = DateTime.Today.AddDays(-5),
+                    Observaciones = "Vaciado de losa del segundo nivel completado sin novedades."
+                },
+                new Avance
+                {
+                    NombreObra = "Edificio Corporativo Alianza",
+                    Etapa = "Instalaciones eléctricas y sanitarias",
+                    Porcentaje = 78,
+                    Responsable = "Luis Fernando Gutiérrez",
+                    Fecha = DateTime.Today.AddDays(-2),
+                    Observaciones = "Cableado principal instalado hasta el tercer piso."
+                },
+                new Avance
+                {
+                    NombreObra = "Remodelación Penthouse Mirador",
+                    Etapa = "Entrega final",
+                    Porcentaje = 100,
+                    Responsable = "Carlos Durán Méndez",
+                    Fecha = DateTime.Today.AddDays(-14),
+                    Observaciones = "Acta de recepción firmada por el cliente."
+                },
+                new Avance
+                {
+                    NombreObra = "Nave Industrial Sector B",
+                    Etapa = "Replanteo y excavación",
+                    Porcentaje = 20,
+                    Responsable = "Pedro Vaca Justiniano",
+                    Fecha = DateTime.Today.AddDays(-1),
+                    Observaciones = "Nivelación de terreno y trazado de zapatas en curso."
+                }
             });
         }
+    }
 
-        if (await db.Table<Proveedor>().CountAsync() == 0)
+    private static async Task AsegurarUsuarioAsync(SQLiteAsyncConnection db, string nombreUsuario, string nombreCompleto, string password, string rol)
+    {
+        var existe = await db.Table<Usuario>().Where(u => u.NombreUsuario == nombreUsuario).CountAsync() > 0;
+        if (!existe)
         {
-            await db.InsertAllAsync(new[]
+            await db.InsertAsync(new Usuario
             {
-                new Proveedor { Empresa = "Cementos del Oriente", Nit = "1020304050", Contacto = "Roberto Áñez", Telefono = "33521100", Rubro = "Cemento y agregados", Correo = "ventas@cemoriente.bo", Calificacion = 5 },
-                new Proveedor { Empresa = "Ferretería El Constructor", Nit = "2030405060", Contacto = "Silvia Justiniano", Telefono = "71112233", Rubro = "Acero y fierro", Correo = "", Calificacion = 4 },
-                new Proveedor { Empresa = "Maquinarias Santa Cruz", Nit = "3040506070", Contacto = "Diego Rivero", Telefono = "77889900", Rubro = "Alquiler de maquinaria", Correo = "alquiler@maqscz.bo", Calificacion = 3 }
+                NombreUsuario = nombreUsuario,
+                NombreCompleto = nombreCompleto,
+                PasswordHash = Seguridad.HashPassword(password),
+                Rol = rol
             });
         }
     }
 }
-

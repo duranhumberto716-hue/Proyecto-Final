@@ -5,7 +5,7 @@ namespace Proyecto_Final.Models;
 /// </summary>
 public class Indicador
 {
-    public string Icono { get; set; } = string.Empty;
+    public string Etiqueta { get; set; } = string.Empty;
     public string Titulo { get; set; } = string.Empty;
     public string Valor { get; set; } = string.Empty;
 }
@@ -20,4 +20,3 @@ public class FilaReporte
     public string Valor { get; set; } = string.Empty;
     public bool Destacado { get; set; }
 }
-

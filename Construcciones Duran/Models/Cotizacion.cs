@@ -20,20 +20,19 @@ public class Cotizacion
     public string GenerarMensajeWhatsApp()
     {
         return $"""
-                🏗️ *SOLICITUD DE COTIZACIÓN - CONSTRUCCIONES DURAN* 🏗️
-                ━━━━━━━━━━━━━━━━━━━━━
-                👤 *Cliente:* {NombreCliente.Trim()}
-                📞 *Teléfono:* {(string.IsNullOrWhiteSpace(TelefonoCliente) ? "No especificado" : TelefonoCliente.Trim())}
-                📍 *Ubicación de la Obra:* {Ubicacion.Trim()}
-                🛠️ *Tipo de Proyecto:* {TipoProyecto.Trim()}
-                📐 *Área Aproximada:* {MetrosCuadrados:N0} m²
-                💰 *Estimado Referencial:* ${(PresupuestoEstimadoReferencial > 0 ? PresupuestoEstimadoReferencial.ToString("N2") : "A evaluar en sitio")} USD
-                
-                📝 *Detalles y Requerimientos:*
+                *SOLICITUD DE COTIZACIÓN - CONSTRUCCIONES DURÁN*
+                ----------------------------------------
+                *Cliente:* {NombreCliente.Trim()}
+                *Teléfono:* {(string.IsNullOrWhiteSpace(TelefonoCliente) ? "No especificado" : TelefonoCliente.Trim())}
+                *Ubicación de la Obra:* {Ubicacion.Trim()}
+                *Tipo de Proyecto:* {TipoProyecto.Trim()}
+                *Área Aproximada:* {MetrosCuadrados:N0} m²
+                *Estimado Referencial:* ${(PresupuestoEstimadoReferencial > 0 ? PresupuestoEstimadoReferencial.ToString("N2") : "A evaluar en sitio")} USD
+
+                *Detalles y Requerimientos:*
                 {Descripcion.Trim()}
-                ━━━━━━━━━━━━━━━━━━━━━
-                _Enviado desde la App Oficial de Construcciones Duran_
+                ----------------------------------------
+                _Enviado desde la App Oficial de Construcciones Durán_
                 """;
     }
 }
-

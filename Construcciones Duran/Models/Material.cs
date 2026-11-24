@@ -3,7 +3,7 @@ using SQLite;
 namespace Proyecto_Final.Models;
 
 /// <summary>
-/// Material de construcción del inventario (tabla Material). CRUD del Integrante 2.
+/// Material de construcción del inventario (tabla Material). CRUD del Integrante 3.
 /// Los precios se registran en bolivianos (Bs).
 /// </summary>
 [Table("Material")]
@@ -31,11 +31,13 @@ public class Material : EntidadBase
     public bool StockBajo => Cantidad <= StockMinimo;
 
     [Ignore]
+    public string EstadoStock => StockBajo ? "STOCK BAJO" : "DISPONIBLE";
+
+    [Ignore]
     public string Resumen => $"{Categoria}  •  {Cantidad:N2} {Unidad}  •  Bs {PrecioUnitario:N2} c/u";
 
     [Ignore]
     public string Detalle => StockBajo
-        ? $"⚠️ Stock bajo (mínimo {StockMinimo:N0})  •  Valor: Bs {ValorTotal:N2}"
-        : $"✅ Stock suficiente  •  Valor: Bs {ValorTotal:N2}";
+        ? $"Stock bajo (mínimo {StockMinimo:N0})  •  Valor: Bs {ValorTotal:N2}"
+        : $"Stock suficiente  •  Valor: Bs {ValorTotal:N2}";
 }
-

@@ -33,14 +33,14 @@ public static class MauiProgram
         builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<RegistroViewModel>();
         builder.Services.AddTransient<MenuViewModel>();
-        builder.Services.AddTransient<ClientesViewModel>();
-        builder.Services.AddTransient<MaterialesViewModel>();
+        builder.Services.AddTransient<ObrasViewModel>();
         builder.Services.AddTransient<EmpleadosViewModel>();
-        builder.Services.AddTransient<ProveedoresViewModel>();
-        builder.Services.AddTransient<ReporteClientesViewModel>();
-        builder.Services.AddTransient<ReporteInventarioViewModel>();
+        builder.Services.AddTransient<MaterialesViewModel>();
+        builder.Services.AddTransient<AvancesViewModel>();
+        builder.Services.AddTransient<ReporteObrasViewModel>();
         builder.Services.AddTransient<ReportePersonalViewModel>();
-        builder.Services.AddTransient<ReporteProveedoresViewModel>();
+        builder.Services.AddTransient<ReporteInventarioViewModel>();
+        builder.Services.AddTransient<ReporteAvancesViewModel>();
 
         // REGISTRO DE PÁGINAS / VISTAS
         builder.Services.AddTransient<MainPage>();
@@ -48,10 +48,10 @@ public static class MauiProgram
         builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<RegistroPage>();
         builder.Services.AddTransient<MenuPage>();
-        builder.Services.AddTransient<ClientesPage>();
-        builder.Services.AddTransient<MaterialesPage>();
+        builder.Services.AddTransient<ObrasPage>();
         builder.Services.AddTransient<EmpleadosPage>();
-        builder.Services.AddTransient<ProveedoresPage>();
+        builder.Services.AddTransient<MaterialesPage>();
+        builder.Services.AddTransient<AvancesPage>();
         builder.Services.AddTransient<ReportePage>();
         builder.Services.AddTransient<OdsPage>();
 

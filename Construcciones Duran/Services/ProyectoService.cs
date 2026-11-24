@@ -10,7 +10,7 @@ namespace Proyecto_Final.Services;
 public class ProyectoService : IProyectoService
 {
     // =========================================================================
-    // ⚠️ GUÍA PARA REEMPLAZAR CON TUS URLS EN LA NUBE (Cloudinary / Supabase):
+    // GUÍA PARA REEMPLAZAR CON TUS URLS EN LA NUBE (Cloudinary / Supabase):
     // =========================================================================
     // 1. Sube tus fotos de obra a tu cuenta de Cloudinary (https://cloudinary.com)
     //    o Supabase Storage (https://supabase.com/storage).
@@ -34,7 +34,7 @@ public class ProyectoService : IProyectoService
                 Ubicacion = "Zona Norte - Residencial Las Palmas",
                 MetrosCuadrados = 320,
                 TiempoEjecucion = "8 meses",
-                // ☁️ URL en la nube (CDN de alta resolución optimizada para móvil):
+                // URL en la nube (CDN de alta resolución optimizada para móvil):
                 ImagenUrl = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=1200&auto=format&fit=crop"
             },
             new()
@@ -46,8 +46,8 @@ public class ProyectoService : IProyectoService
                 Ubicacion = "Av. Empresarial #450",
                 MetrosCuadrados = 850,
                 TiempoEjecucion = "14 meses",
-                // ☁️ URL en la nube:
-                ImagenUrl = "https://images.unsplash.com/photo-1541888946425-d0fbb1861593?q=80&w=1200&auto=format&fit=crop"
+                // Recurso local optimizado (evita fallos de red y carga al instante):
+                ImagenUrl = "edificio_corporativo_alianza.jpg"
             },
             new()
             {
@@ -58,7 +58,7 @@ public class ProyectoService : IProyectoService
                 Ubicacion = "Condominio Mirador Real",
                 MetrosCuadrados = 190,
                 TiempoEjecucion = "3 meses",
-                // ☁️ URL en la nube:
+                // URL en la nube:
                 ImagenUrl = "https://images.unsplash.com/photo-1503387762-592deb58ef4e?q=80&w=1200&auto=format&fit=crop"
             },
             new()
@@ -70,7 +70,7 @@ public class ProyectoService : IProyectoService
                 Ubicacion = "Parque Industrial Sector B",
                 MetrosCuadrados = 1200,
                 TiempoEjecucion = "5 meses",
-                // ☁️ URL en la nube:
+                // URL en la nube:
                 ImagenUrl = "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?q=80&w=1200&auto=format&fit=crop"
             },
             new()
@@ -82,7 +82,7 @@ public class ProyectoService : IProyectoService
                 Ubicacion = "Urb. Los Ceibos",
                 MetrosCuadrados = 260,
                 TiempoEjecucion = "7 meses",
-                // ☁️ URL en la nube:
+                // URL en la nube:
                 ImagenUrl = "https://images.unsplash.com/photo-1613490493576-7fde63acd811?q=80&w=1200&auto=format&fit=crop"
             }
         };

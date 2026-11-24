@@ -15,13 +15,15 @@
 
 	<ItemGroup>
 		<Compile Include="..\Construcciones Duran\Models\EntidadBase.cs" Link="Enlazados\EntidadBase.cs" />
-		<Compile Include="..\Construcciones Duran\Models\Cliente.cs" Link="Enlazados\Cliente.cs" />
-		<Compile Include="..\Construcciones Duran\Models\Material.cs" Link="Enlazados\Material.cs" />
+		<Compile Include="..\Construcciones Duran\Models\Obra.cs" Link="Enlazados\Obra.cs" />
 		<Compile Include="..\Construcciones Duran\Models\Empleado.cs" Link="Enlazados\Empleado.cs" />
-		<Compile Include="..\Construcciones Duran\Models\Proveedor.cs" Link="Enlazados\Proveedor.cs" />
+		<Compile Include="..\Construcciones Duran\Models\Material.cs" Link="Enlazados\Material.cs" />
+		<Compile Include="..\Construcciones Duran\Models\Avance.cs" Link="Enlazados\Avance.cs" />
+		<Compile Include="..\Construcciones Duran\Models\Roles.cs" Link="Enlazados\Roles.cs" />
 		<Compile Include="..\Construcciones Duran\Models\Usuario.cs" Link="Enlazados\Usuario.cs" />
 		<Compile Include="..\Construcciones Duran\Services\Validador.cs" Link="Enlazados\Validador.cs" />
 		<Compile Include="..\Construcciones Duran\Services\Seguridad.cs" Link="Enlazados\Seguridad.cs" />
+		<Compile Include="..\Construcciones Duran\Services\SesionService.cs" Link="Enlazados\SesionService.cs" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -33,4 +35,3 @@
 	</ItemGroup>
 
 </Project>
-

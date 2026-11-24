@@ -3,7 +3,7 @@ using SQLite;
 namespace Proyecto_Final.Models;
 
 /// <summary>
-/// Empleado / personal de obra (tabla Empleado). CRUD del Integrante 3.
+/// Empleado / personal de obra (tabla Empleado). CRUD del Integrante 2.
 /// </summary>
 [Table("Empleado")]
 public class Empleado : EntidadBase
@@ -27,12 +27,13 @@ public class Empleado : EntidadBase
     public bool Activo { get; set; } = true;
 
     [Ignore]
-    public string EstadoTexto => Activo ? "🟢 Activo" : "🔴 Inactivo";
+    public string EstadoTexto => Activo ? "ACTIVO" : "INACTIVO";
 
     [Ignore]
-    public string Resumen => $"{Cargo}  •  CI: {Ci}  •  📞 {Telefono}";
+    public string Resumen => string.IsNullOrWhiteSpace(Telefono)
+        ? $"{Cargo}  •  CI: {Ci}"
+        : $"{Cargo}  •  CI: {Ci}  •  Tel: {Telefono}";
 
     [Ignore]
-    public string Detalle => $"Bs {SalarioMensual:N2}/mes  •  Ingreso: {FechaIngreso:dd/MM/yyyy}  •  {EstadoTexto}";
+    public string Detalle => $"Bs {SalarioMensual:N2}/mes  •  Ingreso: {FechaIngreso:dd/MM/yyyy}";
 }
-

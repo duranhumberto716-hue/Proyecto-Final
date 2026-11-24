@@ -3,12 +3,12 @@ using Proyecto_Final.Services;
 
 namespace Proyecto_Final.ViewModels;
 
-/// <summary>CRUD de Empleados / Personal de obra (Integrante 3).</summary>
+/// <summary>CRUD de Personal / Empleados de obra (Integrante 2).</summary>
 public class EmpleadosViewModel : CrudViewModel<Empleado>
 {
     public EmpleadosViewModel(DatabaseService db) : base(db)
     {
-        Title = "Personal de Obra";
+        Title = "Base de Datos - Personal";
     }
 
     public List<string> Cargos { get; } = new()
@@ -18,6 +18,13 @@ public class EmpleadosViewModel : CrudViewModel<Empleado>
     };
 
     public DateTime FechaMaxima => DateTime.Today;
+
+    protected override string RutaReporte => "ReportePage?tipo=personal";
+    protected override string NombreArchivoCsv => "personal_construcciones_duran";
+    protected override string EncabezadoCsv => "ID,NombreCompleto,CI,Cargo,Telefono,SalarioBs,FechaIngreso,Estado";
+
+    protected override string FormatearFilaCsv(Empleado e) =>
+        $"{e.Id},{EscaparCsv(e.NombreCompleto)},{EscaparCsv(e.Ci)},{EscaparCsv(e.Cargo)},{EscaparCsv(e.Telefono)},{e.SalarioMensual:F2},{e.FechaIngreso:dd/MM/yyyy},{EscaparCsv(e.EstadoTexto)}";
 
     protected override Empleado CrearNuevo() => new() { FechaIngreso = DateTime.Today, Activo = true };
 
@@ -35,9 +42,5 @@ public class EmpleadosViewModel : CrudViewModel<Empleado>
         e.Ci.ToLowerInvariant().Contains(filtro) ||
         e.Cargo.ToLowerInvariant().Contains(filtro);
 
-    protected override IEnumerable<Empleado> Ordenar(IEnumerable<Empleado> datos) =>
-        datos.OrderByDescending(e => e.Activo).ThenBy(e => e.NombreCompleto);
-
     protected override string Describir(Empleado e) => e.NombreCompleto;
 }
-

@@ -13,9 +13,6 @@ public static partial class Validador
     [GeneratedRegex(@"^\d{7,8}$")]
     private static partial Regex TelefonoRegex();
 
-    [GeneratedRegex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$")]
-    private static partial Regex CorreoRegex();
-
     [GeneratedRegex(@"^\d{5,10}(-?[A-Za-z0-9]{1,3})?$")]
     private static partial Regex CiRegex();
 
@@ -25,42 +22,23 @@ public static partial class Validador
     public static bool EsTelefonoValido(string? telefono) =>
         !string.IsNullOrWhiteSpace(telefono) && TelefonoRegex().IsMatch(telefono.Trim());
 
-    /// <summary>El correo es opcional: vacío se considera válido.</summary>
-    public static bool EsCorreoValido(string? correo) =>
-        string.IsNullOrWhiteSpace(correo) || CorreoRegex().IsMatch(correo.Trim());
-
     public static bool EsCiValido(string? ci) =>
         !string.IsNullOrWhiteSpace(ci) && CiRegex().IsMatch(ci.Trim());
 
-    public static string? ValidarCliente(Cliente c)
+    public static string? ValidarObra(Obra o)
     {
-        if (string.IsNullOrWhiteSpace(c.Nombre) || c.Nombre.Trim().Length < 3)
+        if (string.IsNullOrWhiteSpace(o.Nombre) || o.Nombre.Trim().Length < 3)
+            return "El nombre de la obra es obligatorio (mínimo 3 caracteres).";
+        if (string.IsNullOrWhiteSpace(o.Cliente) || o.Cliente.Trim().Length < 3)
             return "El nombre del cliente es obligatorio (mínimo 3 caracteres).";
-        if (!EsCiValido(c.Ci))
-            return "El CI debe tener entre 5 y 10 dígitos (puede incluir complemento, ej: 1234567-1A).";
-        if (!EsTelefonoValido(c.Telefono))
-            return "El teléfono debe tener 7 u 8 dígitos (ej: 77661522).";
-        if (!EsCorreoValido(c.Correo))
-            return "El correo electrónico no tiene un formato válido.";
-        if (string.IsNullOrWhiteSpace(c.Direccion))
-            return "La dirección es obligatoria.";
-        return null;
-    }
-
-    public static string? ValidarMaterial(Material m)
-    {
-        if (string.IsNullOrWhiteSpace(m.Nombre) || m.Nombre.Trim().Length < 2)
-            return "El nombre del material es obligatorio.";
-        if (string.IsNullOrWhiteSpace(m.Categoria))
-            return "Seleccione una categoría.";
-        if (string.IsNullOrWhiteSpace(m.Unidad))
-            return "Seleccione la unidad de medida.";
-        if (m.Cantidad < 0)
-            return "La cantidad no puede ser negativa.";
-        if (m.PrecioUnitario <= 0)
-            return "El precio unitario debe ser mayor a 0.";
-        if (m.StockMinimo < 0)
-            return "El stock mínimo no puede ser negativo.";
+        if (string.IsNullOrWhiteSpace(o.Ubicacion))
+            return "La ubicación de la obra es obligatoria.";
+        if (string.IsNullOrWhiteSpace(o.TipoObra))
+            return "Seleccione el tipo de obra.";
+        if (o.Presupuesto <= 0)
+            return "El presupuesto debe ser mayor a 0.";
+        if (string.IsNullOrWhiteSpace(o.Estado))
+            return "Seleccione el estado de la obra.";
         return null;
     }
 
@@ -81,25 +59,37 @@ public static partial class Validador
         return null;
     }
 
-    public static string? ValidarProveedor(Proveedor p)
+    public static string? ValidarMaterial(Material m)
     {
-        if (string.IsNullOrWhiteSpace(p.Empresa) || p.Empresa.Trim().Length < 3)
-            return "El nombre de la empresa es obligatorio (mínimo 3 caracteres).";
-        if (string.IsNullOrWhiteSpace(p.Nit) || !NitRegex().IsMatch(p.Nit.Trim()))
-            return "El NIT debe tener entre 6 y 15 dígitos.";
-        if (!EsTelefonoValido(p.Telefono))
-            return "El teléfono debe tener 7 u 8 dígitos.";
-        if (string.IsNullOrWhiteSpace(p.Rubro))
-            return "Seleccione el rubro del proveedor.";
-        if (!EsCorreoValido(p.Correo))
-            return "El correo electrónico no tiene un formato válido.";
-        if (p.Calificacion < 1 || p.Calificacion > 5)
-            return "La calificación debe estar entre 1 y 5.";
+        if (string.IsNullOrWhiteSpace(m.Nombre) || m.Nombre.Trim().Length < 2)
+            return "El nombre del material es obligatorio.";
+        if (string.IsNullOrWhiteSpace(m.Categoria))
+            return "Seleccione una categoría.";
+        if (string.IsNullOrWhiteSpace(m.Unidad))
+            return "Seleccione la unidad de medida.";
+        if (m.Cantidad < 0)
+            return "La cantidad no puede ser negativa.";
+        if (m.PrecioUnitario <= 0)
+            return "El precio unitario debe ser mayor a 0.";
+        if (m.StockMinimo < 0)
+            return "El stock mínimo no puede ser negativo.";
         return null;
     }
 
-    [GeneratedRegex(@"^\d{6,15}$")]
-    private static partial Regex NitRegex();
+    public static string? ValidarAvance(Avance a)
+    {
+        if (string.IsNullOrWhiteSpace(a.NombreObra))
+            return "Seleccione o indique la obra correspondiente.";
+        if (string.IsNullOrWhiteSpace(a.Etapa))
+            return "Seleccione la etapa de construcción.";
+        if (a.Porcentaje < 0 || a.Porcentaje > 100)
+            return "El porcentaje de avance debe estar entre 0 y 100.";
+        if (string.IsNullOrWhiteSpace(a.Responsable) || a.Responsable.Trim().Length < 3)
+            return "El nombre del responsable es obligatorio (mínimo 3 caracteres).";
+        if (a.Fecha.Date > DateTime.Today)
+            return "La fecha del avance no puede ser futura.";
+        return null;
+    }
 
     public static string? ValidarRegistro(string? nombreCompleto, string? usuario, string? password, string? confirmacion)
     {
@@ -114,4 +104,3 @@ public static partial class Validador
         return null;
     }
 }
-

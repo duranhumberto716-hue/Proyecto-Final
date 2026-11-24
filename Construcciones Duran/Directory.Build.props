@@ -1,0 +1,12 @@
+<Project>
+  <!--
+    Android AAPT2 en Windows falla con error APT2265 si la ruta de la carpeta intermedia (obj)
+    contiene caracteres no ASCII (por ejemplo, la "ó" en "Aplicaciones Móvil I").
+    Cuando la ruta del proyecto contiene acentos en Windows, redirigimos solo la carpeta obj
+    a una ruta limpia sin acentos, manteniendo la salida final (bin / APK) dentro del proyecto.
+  -->
+  <PropertyGroup Condition="$([MSBuild]::IsOSPlatform('windows')) and $([System.Text.RegularExpressions.Regex]::IsMatch('$(MSBuildProjectDirectory)', '[^\x00-\x7F]'))">
+    <BaseIntermediateOutputPath>C:\MauiBuild\ConstruccionesDuran\obj\</BaseIntermediateOutputPath>
+  </PropertyGroup>
+</Project>
+

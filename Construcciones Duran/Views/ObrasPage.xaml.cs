@@ -2,12 +2,12 @@ using Proyecto_Final.ViewModels;
 
 namespace Proyecto_Final.Views;
 
-/// <summary>CRUD de Proveedores - Integrante 4.</summary>
-public partial class ProveedoresPage : ContentPage
+/// <summary>CRUD de Obras - Integrante 1.</summary>
+public partial class ObrasPage : ContentPage
 {
-    private readonly ProveedoresViewModel _viewModel;
+    private readonly ObrasViewModel _viewModel;
 
-    public ProveedoresPage(ProveedoresViewModel viewModel)
+    public ObrasPage(ObrasViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = _viewModel = viewModel;

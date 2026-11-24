@@ -12,6 +12,9 @@ public abstract class EntidadBase
     [PrimaryKey, AutoIncrement]
     public int Id { get; set; }
 
+    /// <summary>Indica si la fila es impar en la tabla visual (para alternar el color de fondo).</summary>
+    [Ignore]
+    public bool EsFilaAlterna { get; set; }
+
     public EntidadBase Clonar() => (EntidadBase)MemberwiseClone();
 }
-
